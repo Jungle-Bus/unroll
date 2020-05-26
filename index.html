@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<title>Route explorer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    :root {
+        --jungle-color-blue: #0267b1;
+        --jungle-color-orange: #fbb81d;
+    }
+    .w3-junglebus {
+        color: var(--jungle-color-orange) !important;
+        background-color: var(--jungle-color-blue) !important;
+    }
+    .w3-text-junglebus {
+        color: var(--jungle-color-blue) !important;
+    }
+    
+
+    .stop_dot {
+        background-color: #FFF;
+        border-style: solid;
+        border-width: 4px;
+        border-color: #000;
+        border-radius: 50%;
+        box-sizing: content-box;
+        content: '';
+        height: 6px;
+        width: 6px;
+        position: relative;
+        display: inline-block;
+        left: -9px;
+        top: -3px;
+    }
+
+    .stop_item {
+        border-left-style: solid;
+        border-left-width: 4px;
+        border-left-color: #000;
+        height: 26px;
+        box-sizing: content-box;
+    }
+
+</style>
+<body class="w3-light-grey">
+
+  <header class="w3-container w3-junglebus">
+    <img src="img/osm.svg" alt="Logo" class="w3-left w3-circle w3-margin-right" style="width:60px">
+      <h1>Route explorer</h1>
+    </header>
+
+<!-- Header -->
+<header class="w3-display-container w3-content" style="max-width:1500px;">
+  <img class="w3-image" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Buslinie_1_am_Omnibusbahnhof_in_T%C3%BCbingen_bei_Nacht.jpg/1024px-Buslinie_1_am_Omnibusbahnhof_in_T%C3%BCbingen_bei_Nacht.jpg" alt="Bus" style="min-width:800px" width="1500">
+  <div class="w3-display-left w3-padding w3-col l6 m8">
+
+    <div class="w3-bar w3-black">
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Search');"><i class="fa fa-search w3-margin-right"></i>Search</button>      
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Geo');"><i class="fa fa-street-view w3-margin-right"></i>Town</button>
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Examples');"><i class="fa fa-exclamation w3-margin-right"></i>Examples</button>
+    </div>
+
+    <!-- Tabs -->
+    <div id="Search" class="w3-container w3-white w3-padding-16 myLink">
+      <h3>Search routes</h3>
+      <p id="error_network_ref"></p>
+      <div class="w3-row-padding" style="margin:0 -16px;">
+        <div class="w3-half">
+          <label>Line number</label>
+          <input id="search_ref" class="w3-input w3-border" type="text" placeholder="393">
+        </div>
+        <div class="w3-half">
+          <label>Operator / Network</label>
+          <input id="search_network" class="w3-input w3-border" type="text" placeholder="RATP">
+        </div>
+      </div>
+      <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(false)">Search</button></p>
+    </div>
+
+    <div id="Geo" class="w3-container w3-white w3-padding-16 myLink">
+      <h3>Search routes by town name</h3>
+      <p id="error_town"></p>
+      <input id="search_town" class="w3-input w3-border" type="text" placeholder="Monaco">
+      <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(true)">Display routes in town</button></p>
+    </div>
+    
+    <div id="Examples" class="w3-container w3-white w3-padding-16 myLink">
+      <h3>Check out some examples to get inspired</h3>
+      <p><button class="w3-button w3-dark-grey" onclick="display_examples()">Display examples</button></p>
+    </div>
+    
+  </div>
+</header>
+
+<div class="w3-content" style="max-width:1100px;">
+
+  <div class="w3-container w3-margin-top">
+  <table class="w3-table w3-striped w3-white" id="lines_table"></table>
+        
+        
+
+  </div>
+
+ 
+
+
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-junglebus w3-center w3-margin-top w3-tiny">
+  <p><a href="https://junglebus.io" target="_blank">Jungle Bus</a> - Mobility open data, proudly crowdsourced by the OpenStreetMap community</p>
+    <div class="w3-xlarge">
+    <i class="fa fa-github w3-hover-opacity"></i>
+  </div>
+</footer>
+
+<script>
+// Tabs
+function openLink(evt, linkName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("myLink");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-junglebus", "");
+  }
+  document.getElementById(linkName).style.display = "block";
+  evt.currentTarget.className += " w3-junglebus";
+}
+
+// Click on the first tablink on load
+document.getElementsByClassName("tablink")[2].click();
+</script>
+<script src="https://unpkg.com/jungle_bus_web_components@1.0.1/src/transport_thumbnail.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
+
