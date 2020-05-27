@@ -304,7 +304,12 @@ function display_route_map(map_id, route_colour, route_geojson, stops_geojson){
                                         pointToLayer: display_platforms
                                         }).addTo(map);
 
-    map.fitBounds(feature.getBounds());
+    if (feature.getBounds().isValid()){
+        map.fitBounds(feature.getBounds());
+    } else {
+        map.fitBounds(feature_platforms.getBounds());
+    }
+        
 }
 
 function display_credits(){
