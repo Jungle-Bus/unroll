@@ -2,7 +2,7 @@
 
 var line_id = get_parameter_from_url('line');
 //var line_id = 6117019 //IDF
-//var line_id = 10361922 //Abidjan // TODO
+//var line_id = 10361922 //Abidjan 
 
 overpass_data = get_line_info_from_overpass(line_id);
 
@@ -55,23 +55,34 @@ function get_line_info_from_overpass(line_id) {
                     }
                 }
                 
-                //TODO : maybe to be adapted for each mode
                 var platform_list_as_geojson = []
                 route['members']
                     .filter(member => member['role'].startsWith("platform"))
                     .map(member => platform_list_as_geojson.push(geojson_elems[member['type'] + '/' + member['ref']]));
                 
+                var stop_position_list_as_geojson = []
+                route['members']
+                    .filter(member => member['role'].startsWith("stop"))
+                    .map(member => stop_position_list_as_geojson.push(geojson_elems[member['type'] + '/' + member['ref']]));
+    
                 var route_title = document.createElement("h5");
                 route_title.innerHTML = display_route_title(route['tags']);
                 trip_list.appendChild(route_title);
                 
+                var mode = route['tags']['route'];
+                if (["subway", "tram", "train", "railway"].includes(mode)){
+                    stop_list_as_geojson = stop_position_list_as_geojson
+                } else {
+                    stop_list_as_geojson = platform_list_as_geojson
+                }
+
                 var route_map = document.createElement("div");
                 route_map.classList.add("w3-container");
-                route_map.innerHTML = init_route_map(route['tags'], platform_list_as_geojson, route_id);
+                route_map.innerHTML = init_route_map(route['tags'], stop_list_as_geojson, route_id);
                 trip_list.appendChild(route_map);
                 
                 var map_id = "map_" + route_id
-                display_route_map(map_id, route['tags']['colour'], geojson_feature, platform_list_as_geojson);
+                display_route_map(map_id, route['tags']['colour'], geojson_feature, stop_list_as_geojson);
                                 
  
                 if (route['tags']['interval']){
@@ -248,6 +259,7 @@ function init_route_map(tags, stop_list, relation_id){
           <h6 class="w3-text-junglebus"><i class="fa fa-edit fa-fw w3-margin-right"></i><a href="https://www.openstreetmap.org/edit?editor=remote&relation=${relation_id}" target="_blank">Edit trip </a></h6>
           <p>Origin: ${tags['from'] || '??'}</p>
           <p>Destination: ${tags['to'] || '??'}</p>
+          <p>Travel time: ${tags['duration'] || 'unknown'}</p>
           <p>${stop_list}</p>
           <div id="map_${relation_id}" style="height: 280px;"></div>
         </div>
