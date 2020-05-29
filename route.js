@@ -28,11 +28,12 @@ function get_line_info_from_overpass(line_id) {
                 console.error("This is not a public transport line")
             }
             
+            var trip_number = relation['members'].length;
+            var data_age = data['osm3s']['timestamp_osm_base'];
+
             document.getElementById("credits").innerHTML = display_credits();
             document.getElementById("data_age").textContent = data_age;
 
-            var trip_number = relation['members'].length;
-            var data_age = data['osm3s']['timestamp_osm_base'];
             
             document.getElementById("line_title").innerHTML = display_line_title(relation['tags']);
             document.getElementById("line_detail").innerHTML = display_line_details(relation['tags'], trip_number);
@@ -380,7 +381,6 @@ async function get_and_display_wikidata_info(tags){
 
     var operator_wikidata_id = tags["operator:wikidata"];
     var network_wikidata_id = tags["network:wikidata"];
-    var wikipedia_lang = "en"
     if (tags["wikipedia"]){
         var wikipedia_url = `https://fr.wikipedia.org/wiki/${tags["wikipedia"]}?uselang=en-US`;
         var wikipedia_id = tags["wikipedia"].split(":")[1];
@@ -396,6 +396,7 @@ async function get_and_display_wikidata_info(tags){
         if (wikidata_content['sitelinks']['enwiki']){
             var wikipedia_url = wikidata_content['sitelinks']['enwiki']['url'];
             var wikipedia_id = wikidata_content['sitelinks']['enwiki']['title'];
+            var wikipedia_lang = "en"
         }
         if (wikidata_content['claims']['P18']){ //image
             var image_name = wikidata_content['claims']['P18'][0]['mainsnak']['datavalue']['value']
@@ -413,7 +414,38 @@ async function get_and_display_wikidata_info(tags){
         if (wikidata_content['claims']['P361']){ //network
             var network_wikidata_id = wikidata_content['claims']['P361'][0]['mainsnak']['datavalue']['value']['id']
         }
-        // TODO - we could also get P18 images from operator & network
+    }
+    if (network_wikidata_id){
+        var wikidata_url = `https://www.wikidata.org/wiki/Special:EntityData/${network_wikidata_id}.json`
+        var wikidata_response = await fetch(wikidata_url);
+        var wikidata_data = await wikidata_response.json();
+        var wikidata_content = wikidata_data['entities'][network_wikidata_id]
+        if (wikidata_content['claims']['P154']){ //logo
+            var image_name = wikidata_content['claims']['P154'][0]['mainsnak']['datavalue']['value']
+            var image_url = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${image_name}?width=150`
+            images.push(image_url)
+        }
+        if (wikidata_content['claims']['P18']){ //image
+            var image_name = wikidata_content['claims']['P18'][0]['mainsnak']['datavalue']['value']
+            var image_url = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${image_name}?width=150`
+            images.push(image_url)
+        }
+    }
+    if (operator_wikidata_id){
+        var wikidata_url = `https://www.wikidata.org/wiki/Special:EntityData/${operator_wikidata_id}.json`
+        var wikidata_response = await fetch(wikidata_url);
+        var wikidata_data = await wikidata_response.json();
+        var wikidata_content = wikidata_data['entities'][operator_wikidata_id]
+        if (wikidata_content['claims']['P154']){ //logo
+            var image_name = wikidata_content['claims']['P154'][0]['mainsnak']['datavalue']['value']
+            var image_url = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${image_name}?width=150`
+            images.push(image_url)
+        }
+        if (wikidata_content['claims']['P18']){ //image
+            var image_name = wikidata_content['claims']['P18'][0]['mainsnak']['datavalue']['value']
+            var image_url = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${image_name}?width=150`
+            images.push(image_url)
+        }
     }
 
     if (wikipedia_id){

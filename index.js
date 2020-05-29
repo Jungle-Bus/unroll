@@ -40,13 +40,14 @@ function display_examples(){
             "name":"Noctilien N24: Gare de Sartrouville ↔ Châtelet "
         },
         {
-            "id": 7227705,
-            "ref":"2",
+            "id": 3328765,
+            "ref":"6",
             "mode":"subway",
-            "colour":"blue",
+            "colour":"#75c695",
             "operator":"",
             "network":"",
-            "name":"RATP Métro 2",
+            "comment": "with images and wikipedia",
+            "name":"Paris Métro line 6",
         },     
     ]
     var lines_table = document.getElementById("lines_table");
