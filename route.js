@@ -28,16 +28,16 @@ function get_line_info_from_overpass(line_id) {
                 console.error("This is not a public transport line")
             }
             
+            document.getElementById("credits").innerHTML = display_credits();
+            document.getElementById("data_age").textContent = data_age;
+
             var trip_number = relation['members'].length;
             var data_age = data['osm3s']['timestamp_osm_base'];
             
             document.getElementById("line_title").innerHTML = display_line_title(relation['tags']);
             document.getElementById("line_detail").innerHTML = display_line_details(relation['tags'], trip_number);
             document.getElementById("line_fares").innerHTML = display_line_fares(relation['tags']);
-            // TODO : *:wikidata tags ? osmose ?
             document.getElementById("line_schedules").innerHTML = display_line_or_route_schedules(relation['tags'], line_id);
-            document.getElementById("credits").innerHTML = display_credits();
-            document.getElementById("data_age").textContent = data_age;
             
             var trip_list = document.getElementById("trip_list")
             var data_as_geojson = osmtogeojson(data);
@@ -92,8 +92,10 @@ function get_line_info_from_overpass(line_id) {
                     trip_list.appendChild(route_schedule);  
                 }
             }
-        })
-        
+
+            var wikidata_info = get_and_display_wikidata_info(relation['tags'])
+
+        })        
         .catch(function(error) {
             console.error(error.message);
             document.getElementById("error").innerHTML = display_error("Oops, something went wrong!");
@@ -203,6 +205,41 @@ function display_line_or_route_schedules(tags, relation_id){
           <h5 class="w3-opacity"><b>Schedules</b></h5>
           <h6 class="w3-text-junglebus"><i class="fa fa-edit fa-fw w3-margin-right"></i><a href="https://jungle-bus.github.io/Busy-Hours/#/line/${relation_id}" target="_blank">Edit schedules</a></h6>
           ${one_liner}
+        </div>
+      </div>
+    `
+    return template
+}
+
+function display_line_wikipedia_extract(wikipedia_info){   
+    var template = `
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Wikipedia</b></h5>
+          <h6 class="w3-text-junglebus"><i class="fa fa-wikipedia-w fa-fw w3-margin-right"></i><a href="${wikipedia_info['url']}" target="_blank">Read more on Wikipedia </a></h6>
+          <p>`
+    if (wikipedia_info['image']){
+        template += `<img src="${wikipedia_info['image']}" alt="image from wikimedia commons" class="w3-left w3-circle w3-margin-right" style="width:150px">`;
+
+    }
+    template += `${wikipedia_info['extract']} ...</p>
+        </div>
+      </div>
+    `
+    return template
+}
+
+function display_line_images(commons_images){
+    var template = `
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Images</b></h5>
+          <h6 class="w3-text-junglebus"><i class="fa fa-wikipedia-w fa-fw w3-margin-right"></i><a href="${commons_images['url']}" target="_blank">See on Wikidata </a></h6>`
+    
+    for (var image of commons_images['images_list']){
+        template += `<img src="${image}" alt="image from wikimedia commons" class="">   `
+    }      
+    template += `
         </div>
       </div>
     `
@@ -336,6 +373,71 @@ function display_credits(){
       </div>
     `
     return template
+}
+
+async function get_and_display_wikidata_info(tags){
+    var wikidata_id = tags["wikidata"];
+
+    var operator_wikidata_id = tags["operator:wikidata"];
+    var network_wikidata_id = tags["network:wikidata"];
+    var wikipedia_lang = "en"
+    if (tags["wikipedia"]){
+        var wikipedia_url = `https://fr.wikipedia.org/wiki/${tags["wikipedia"]}?uselang=en-US`;
+        var wikipedia_id = tags["wikipedia"].split(":")[1];
+        var wikipedia_lang = tags["wikipedia"].split(":")[0];
+    }
+
+    var images = []
+    if (wikidata_id){
+        var wikidata_url = `https://www.wikidata.org/wiki/Special:EntityData/${wikidata_id}.json`
+        var wikidata_response = await fetch(wikidata_url);
+        var wikidata_data = await wikidata_response.json();
+        var wikidata_content = wikidata_data['entities'][wikidata_id]
+        if (wikidata_content['sitelinks']['enwiki']){
+            var wikipedia_url = wikidata_content['sitelinks']['enwiki']['url'];
+            var wikipedia_id = wikidata_content['sitelinks']['enwiki']['title'];
+        }
+        if (wikidata_content['claims']['P18']){ //image
+            var image_name = wikidata_content['claims']['P18'][0]['mainsnak']['datavalue']['value']
+            var image_url = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${image_name}?width=150`
+            images.push(image_url)
+        }
+        if (wikidata_content['claims']['P154']){ //logo
+            var image_name = wikidata_content['claims']['P154'][0]['mainsnak']['datavalue']['value']
+            var image_url = `https://commons.wikimedia.org/wiki/Special:Redirect/file/${image_name}?width=150`
+            images.push(image_url)
+        }
+        if (wikidata_content['claims']['P137']){ //operator
+            var operator_wikidata_id = wikidata_content['claims']['P137'][0]['mainsnak']['datavalue']['value']['id']
+        } 
+        if (wikidata_content['claims']['P361']){ //network
+            var network_wikidata_id = wikidata_content['claims']['P361'][0]['mainsnak']['datavalue']['value']['id']
+        }
+        // TODO - we could also get P18 images from operator & network
+    }
+
+    if (wikipedia_id){
+        var wikipedia_api_url = `https://${wikipedia_lang}.wikipedia.org/api/rest_v1/page/summary/${wikipedia_id}`
+        var wikipedia_response = await fetch(wikipedia_api_url);
+        var wikipedia_data = await wikipedia_response.json();  
+        var wikipedia_extract = wikipedia_data['extract'];
+        if (wikipedia_extract){
+            var wikipedia = {
+                "url": wikipedia_url,
+                "image" : images[0],
+                "extract": wikipedia_extract
+            }
+            document.getElementById("line_wikipedia").innerHTML = display_line_wikipedia_extract(wikipedia);
+        }
+    }
+
+    if (images.length > 0){
+        var wikidata_and_commons = {
+            "images_list": images,
+            "url": `https://www.wikidata.org/wiki/${wikidata_id}`
+        }
+        document.getElementById("line_commons").innerHTML = display_line_images(wikidata_and_commons);
+    }
 }
 
 function display_error(error_message){
