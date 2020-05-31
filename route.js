@@ -309,7 +309,7 @@ function init_route_map(tags, stop_list, relation_id){
 function display_route_map(map_id, route_colour, route_geojson, stops_geojson){
     var map = L.map(map_id).setView([48.84702, 2.37705], 14);
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         opacity: 0.6,
         attribution: '&copy; Jungle Bus - <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
