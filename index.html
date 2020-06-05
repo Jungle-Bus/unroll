@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Route explorer</title>
+    <title>Unroll</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -12,9 +12,9 @@
 <body class="w3-light-grey">
 
   <header class="w3-container w3-junglebus">
-    <img src="img/osm.svg" alt="Logo" class="w3-left w3-circle w3-margin-right" style="width:60px">
-      <h1>Route explorer</h1>
-    </header>
+    <img src="img/Logo_Unroll.png" alt="Logo" class="w3-left w3-margin-right" style="height:80px">
+    <h1>Unroll</h1>
+  </header>
 
 <!-- Header -->
 <header class="w3-display-container w3-content" style="max-width:1500px;">
@@ -22,7 +22,7 @@
   <div class="w3-display-left w3-padding w3-col l6 m8">
 
     <div class="w3-bar w3-black">
-      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Search');"><i class="fa fa-search w3-margin-right"></i>Search</button>      
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Search');"><i class="fa fa-search w3-margin-right"></i>Search</button>
       <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Geo');"><i class="fa fa-street-view w3-margin-right"></i>Town</button>
       <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Examples');"><i class="fa fa-exclamation w3-margin-right"></i>Examples</button>
     </div>
@@ -50,12 +50,12 @@
       <input id="search_town" class="w3-input w3-border" type="text" placeholder="Monaco">
       <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(true)">Display routes in town</button></p>
     </div>
-    
+
     <div id="Examples" class="w3-container w3-white w3-padding-16 myLink">
       <h3>Check out some examples to get inspired</h3>
       <p><button class="w3-button w3-dark-grey" onclick="display_examples()">Display examples</button></p>
     </div>
-    
+
   </div>
 </header>
 
@@ -63,22 +63,21 @@
 
   <div class="w3-container w3-margin-top">
   <table class="w3-table w3-striped w3-white" id="lines_table"></table>
-        
-        
+
+
 
   </div>
 
- 
+
 
 
 <!-- End page content -->
 </div>
 
-<!-- Footer -->
 <footer class="w3-container w3-junglebus w3-center w3-margin-top w3-tiny">
-  <p><a href="https://junglebus.io" target="_blank">Jungle Bus</a> - Mobility open data, proudly crowdsourced by the OpenStreetMap community</p>
+  <p>Mobility open data, proudly crafted by the OpenStreetMap community - Open source tool by <a href="https://junglebus.io" target="_blank">Jungle Bus</a></p>
     <div class="w3-xlarge">
-    <i class="fa fa-github w3-hover-opacity"></i>
+    <a href="https://github.com/Jungle-Bus/unroll" target="_blank"><i class="fa fa-github w3-hover-opacity"></i></a>
   </div>
 </footer>
 
@@ -105,4 +104,3 @@ document.getElementsByClassName("tablink")[2].click();
 <script src="index.js"></script>
 </body>
 </html>
-

@@ -258,7 +258,7 @@ function display_route_map(map_id, route_colour, route_geojson, stops_geojson){
 
     L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         opacity: 0.6,
-        attribution: '&copy; Jungle Bus - <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     L.control.scale().addTo(map);
 
@@ -315,7 +315,7 @@ function display_credits(relation_id){
         <div class="w3-container">
         <h6 class="w3-text-junglebus"><i class="fa fa-edit fa-fw w3-margin-right"></i><a href="https://openstreetmap.org/relation/${relation_id}" target="_blank">See on OpenStreetMap </a></h6>
         	<img src="img/osm.svg" alt="OSM Logo" class="w3-left w3-margin-right" style="width:60px">
-      		<p>This information comes from <a href="https://openstreetmap.org/" target="_blank">OpenStreetMap</a>, the free and collaborative map. Join the community to complete or correct the detail of this route!</p><br>          
+      		<p>This information comes from <a href="https://openstreetmap.org/" target="_blank">OpenStreetMap</a>, the free and collaborative map. Join the community to complete or correct the detail of this route!</p><br>
         </div>
       </div>
     `

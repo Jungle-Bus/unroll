@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Route explorer</title>
+    <title>Unroll</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -12,16 +12,16 @@
 
 <body class="w3-light-grey">
 
-<header class="w3-container w3-junglebus">
-<img src="img/osm.svg" alt="Logo" class="w3-left w3-circle w3-margin-right" style="width:60px">
-  <h1><a href="index.html">Route explorer</a></h1>
-</header>
+  <header class="w3-container w3-junglebus">
+    <img src="img/Logo_Unroll.png" alt="Logo" class="w3-left w3-margin-right" style="height:80px">
+    <h1><a href="index.html">Unroll</a></h1>
+  </header>
 
 <div class="w3-content w3-margin-top">
   <div class="w3-row-padding w3-content">
 
-    <div>   
-      <div id="error"></div> 
+    <div>
+      <div id="error"></div>
       <div id="line_title">
         <p><i class="fa fa-spinner fa-spin"></i> loading route ...</p>
       </div>
@@ -33,21 +33,21 @@
 
       <h3 class="w3-opacity"><b> Trips </b></h3>
       <div id="trip_list"></div>
-      
+
       <h3 class="w3-opacity"><b> Credits </b></h3>
       <div id="credits"></div>
-      
-      <div class="w3-tiny">Last updated on <span id="data_age"></span>.</div> 
+
+      <div class="w3-tiny">Last updated on <span id="data_age"></span>.</div>
     </div>
-    
+
   </div>
-  
+
 </div>
 
 <footer class="w3-container w3-junglebus w3-center w3-margin-top w3-tiny">
-  <p><a href="https://junglebus.io" target="_blank">Jungle Bus</a> - Mobility open data, proudly crowdsourced by the OpenStreetMap community</p>
+  <p>Mobility open data, proudly crafted by the OpenStreetMap community - Open source tool by <a href="https://junglebus.io" target="_blank">Jungle Bus</a></p>
     <div class="w3-xlarge">
-    <i class="fa fa-github w3-hover-opacity"></i>
+    <a href="https://github.com/Jungle-Bus/unroll" target="_blank"><i class="fa fa-github w3-hover-opacity"></i></a>
   </div>
 </footer>
 <script src="https://unpkg.com/jungle_bus_web_components@1.0.1/src/transport_thumbnail.js"></script>
@@ -58,4 +58,3 @@
 <script src="route.js"></script>
 </body>
 </html>
-
