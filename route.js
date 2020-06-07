@@ -1,106 +1,53 @@
-
-
 var line_id = get_parameter_from_url('line');
 //var line_id = 6117019 //IDF
-//var line_id = 10361922 //Abidjan 
+//var line_id = 10361922 //Abidjan
 
-overpass_data = get_line_info_from_overpass(line_id);
+unroll_line(line_id)
 
-function get_line_info_from_overpass(line_id) {
-    var overpass_url = `https://overpass-api.de/api/interpreter?data=[out:json][timeout:25];relation(${line_id});(._;>>;);out;`
-    fetch(overpass_url)
-        .then(function(data) {
-            return data.json()
-        })
-        .then(function(data) {
-            //var relation = data.elements.reverse()[0];
-            var other_relations = {}
-            for (i = 0; i < data['elements'].length; i++) {
-                if (data['elements'][i]['id'] == line_id) {
-                    relation = data['elements'][i];
-                } else if (data['elements'][i]['type'] == "relation") {
-                    var relation_id = data['elements'][i]['id'];
-                    other_relations[relation_id] = data['elements'][i];
-                }
-            }
-            
-            if (relation['tags']['type'] != 'route_master') {
-                console.error("This is not a public transport line")
-            }
-            
-            var trip_number = relation['members'].length;
-            var data_age = data['osm3s']['timestamp_osm_base'];
+async function unroll_line(line_id){
+    var status = await line_data.init_from_overpass(line_id);
+    if (status !="ok"){
+        console.error(status);
+        document.getElementById("error").innerHTML = display_error(status);
+    }
 
-            document.getElementById("credits").innerHTML = display_credits();
-            document.getElementById("data_age").textContent = data_age;
+    var data_age = line_data.get_data_age();
+    document.getElementById("credits").innerHTML = display_credits(line_id);
+    document.getElementById("data_age").textContent = data_age;
 
-            
-            document.getElementById("line_title").innerHTML = display_line_title(relation['tags']);
-            document.getElementById("line_detail").innerHTML = display_line_details(relation['tags'], trip_number);
-            document.getElementById("line_fares").innerHTML = display_line_fares(relation['tags']);
-            document.getElementById("line_schedules").innerHTML = display_line_or_route_schedules(relation['tags'], line_id);
-            
-            var trip_list = document.getElementById("trip_list")
-            var data_as_geojson = osmtogeojson(data);
-            
-            for (i = 0; i < relation['members'].length; i++) {
-                var route_id = relation['members'][i]['ref'];
-                var route = other_relations[route_id];
-                
-                var geojson_elems = {}
-                for (j = 0; j < data_as_geojson['features'].length; j++) {
-                    if (data_as_geojson['features'][j]['id'] == "relation/"+route_id) {
-                        var geojson_feature = data_as_geojson['features'][j]
-                    } else {
-                        geojson_elems[data_as_geojson['features'][j]['id']] = data_as_geojson['features'][j]
-                    }
-                }
-                
-                var platform_list_as_geojson = []
-                route['members']
-                    .filter(member => member['role'].startsWith("platform"))
-                    .map(member => platform_list_as_geojson.push(geojson_elems[member['type'] + '/' + member['ref']]));
-                
-                var stop_position_list_as_geojson = []
-                route['members']
-                    .filter(member => member['role'].startsWith("stop"))
-                    .map(member => stop_position_list_as_geojson.push(geojson_elems[member['type'] + '/' + member['ref']]));
-    
-                var route_title = document.createElement("h5");
-                route_title.innerHTML = display_route_title(route['tags']);
-                trip_list.appendChild(route_title);
-                
-                var mode = route['tags']['route'];
-                if (["subway", "tram", "train", "railway"].includes(mode)){
-                    stop_list_as_geojson = stop_position_list_as_geojson
-                } else {
-                    stop_list_as_geojson = platform_list_as_geojson
-                }
+    var trip_number = line_data.get_trips_number();
+    var line_tags = line_data.get_tags();
 
-                var route_map = document.createElement("div");
-                route_map.classList.add("w3-container");
-                route_map.innerHTML = init_route_map(route['tags'], stop_list_as_geojson, route_id);
-                trip_list.appendChild(route_map);
-                
-                var map_id = "map_" + route_id
-                display_route_map(map_id, route['tags']['colour'], geojson_feature, stop_list_as_geojson);
-                                
- 
-                if (route['tags']['interval']){
-                    var route_schedule = document.createElement("div");
-                    route_schedule.classList.add("w3-container");
-                    route_schedule.innerHTML = display_line_or_route_schedules(route['tags'], route_id);
-                    trip_list.appendChild(route_schedule);  
-                }
-            }
+    document.getElementById("line_title").innerHTML = display_line_title(line_tags);
+    document.getElementById("line_detail").innerHTML = display_line_details(line_tags, trip_number);
+    document.getElementById("line_fares").innerHTML = display_line_fares(line_tags);
+    document.getElementById("line_schedules").innerHTML = display_line_or_route_schedules(line_tags, line_id);
 
-            var wikidata_info = get_and_display_wikidata_info(relation['tags'])
+    get_and_display_wikidata_info(line_tags);
 
-        })        
-        .catch(function(error) {
-            console.error(error.message);
-            document.getElementById("error").innerHTML = display_error("Oops, something went wrong!");
-        });
+    var trips = line_data.get_trips();
+    for (i = 0; i < trips.length; i++) {
+        var route_title = document.createElement("h5");
+        route = trips[i];
+        route_title.innerHTML = display_route_title(route['tags']);
+        trip_list.appendChild(route_title);
+
+        var route_map = document.createElement("div");
+        route_map.classList.add("w3-container");
+        route_map.innerHTML = init_route_map(route['tags'], route["stop_list"], route["id"]);
+        trip_list.appendChild(route_map);
+
+        var map_id = "map_" + route["id"]
+        display_route_map(map_id, route['tags']['colour'], route["shape"], route["stop_list"]);
+
+        if (route['tags']['interval']){
+            var route_schedule = document.createElement("div");
+            route_schedule.classList.add("w3-container");
+            route_schedule.innerHTML = display_line_or_route_schedules(route['tags'], route_id);
+            trip_list.appendChild(route_schedule);
+        }
+    }
+
 }
 
 function display_line_title(tags){
@@ -111,7 +58,7 @@ function display_line_title(tags){
                 data-transport-mode="${tags['route_master']}"
                 data-transport-line-code="${tags['ref'] || ' '}"
                 data-transport-line-color="${tags['colour']}">
-            </transport-thumbnail> 
+            </transport-thumbnail>
             ${tags['name'] || "??" }
         </h2>
     </div>
@@ -158,7 +105,7 @@ function display_line_fares(tags){
     } else {
         var fare = "Unknown price"
     }
-    
+
     var template = `
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <div class="w3-container">
@@ -173,7 +120,7 @@ function display_line_fares(tags){
 
 function display_line_or_route_schedules(tags, relation_id){
     if (tags['interval'] && tags['opening_hours']){
-        var th = new TransportHours();	
+        var th = new TransportHours();
         var result = th.tagsToHoursObject(tags);
         var all_intervals = result['allComputedIntervals']
         if (all_intervals == "invalid"){
@@ -189,7 +136,7 @@ function display_line_or_route_schedules(tags, relation_id){
                 });
                 for (var interval_hours in intervals) {
                     one_liner += `<p class="w3-container"><i class="fa fa-fw fa-clock-o"></i> ${interval_hours} <i class="fa fa-hourglass-start"></i> ${intervals[interval_hours]} min</p>`
-                }  
+                }
             }
         }
     } else if (tags['interval']) {
@@ -212,7 +159,7 @@ function display_line_or_route_schedules(tags, relation_id){
     return template
 }
 
-function display_line_wikipedia_extract(wikipedia_info){   
+function display_line_wikipedia_extract(wikipedia_info){
     var template = `
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <div class="w3-container">
@@ -236,10 +183,10 @@ function display_line_images(commons_images){
         <div class="w3-container">
           <h5 class="w3-opacity"><b>Images</b></h5>
           <h6 class="w3-text-junglebus"><i class="fa fa-wikipedia-w fa-fw w3-margin-right"></i><a href="${commons_images['url']}" target="_blank">See on Wikidata </a></h6>`
-    
+
     for (var image of commons_images['images_list']){
         template += `<img src="${image}" alt="image from wikimedia commons" class="">   `
-    }      
+    }
     template += `
         </div>
       </div>
@@ -249,7 +196,7 @@ function display_line_images(commons_images){
 
 function display_route_title(tags){
     var template = `
-    <h5 class="w3-opacity"> 
+    <h5 class="w3-opacity">
         <transport-thumbnail
             data-transport-network="${tags['network'] || '??'}"
             data-transport-mode="${tags['route'] || 'bus'}"
@@ -266,7 +213,7 @@ function create_stop_list_for_a_route(stop_list, route_colour) {
     var route_colour = route_colour || 'grey';
     var inner_html = ''
     for (const stop of stop_list) {
-        
+
         if (stop != stop_list[stop_list.length - 1]) {
             var border_color = route_colour;
         } else { // remove the border so the stop list ends with a dot
@@ -314,8 +261,8 @@ function display_route_map(map_id, route_colour, route_geojson, stops_geojson){
         attribution: '&copy; Jungle Bus - <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
     L.control.scale().addTo(map);
-    
-    
+
+
     var line_weight = 4;
     var line_colour = route_colour || "grey";
     var feature_outlines = L.geoJson(route_geojson, {
@@ -359,17 +306,16 @@ function display_route_map(map_id, route_colour, route_geojson, stops_geojson){
     } else {
         map.fitBounds(feature_platforms.getBounds());
     }
-        
+
 }
 
-function display_credits(){
+function display_credits(relation_id){
     var template = `
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <div class="w3-container">
-        <h6 class="w3-text-junglebus"><i class="fa fa-edit fa-fw w3-margin-right"></i><a href="https://openstreetmap.org/relation/${line_id}" target="_blank">See on OpenStreetMap </a></h6>
-        	<img src="img/osm.svg" alt="Avatar" class="w3-left w3-margin-right w3-margin-top" style="width:60px">
-      		<p>This information comes from <a href="https://openstreetmap.org/" target="_blank">OpenStreetMap</a>, the free and collaborative map. Join the community to complete or correct the detail of this route!</p><br>
-          
+        <h6 class="w3-text-junglebus"><i class="fa fa-edit fa-fw w3-margin-right"></i><a href="https://openstreetmap.org/relation/${relation_id}" target="_blank">See on OpenStreetMap </a></h6>
+        	<img src="img/osm.svg" alt="OSM Logo" class="w3-left w3-margin-right" style="width:60px">
+      		<p>This information comes from <a href="https://openstreetmap.org/" target="_blank">OpenStreetMap</a>, the free and collaborative map. Join the community to complete or correct the detail of this route!</p><br>          
         </div>
       </div>
     `
@@ -410,7 +356,7 @@ async function get_and_display_wikidata_info(tags){
         }
         if (wikidata_content['claims']['P137']){ //operator
             var operator_wikidata_id = wikidata_content['claims']['P137'][0]['mainsnak']['datavalue']['value']['id']
-        } 
+        }
         if (wikidata_content['claims']['P361']){ //network
             var network_wikidata_id = wikidata_content['claims']['P361'][0]['mainsnak']['datavalue']['value']['id']
         }
@@ -451,7 +397,7 @@ async function get_and_display_wikidata_info(tags){
     if (wikipedia_id){
         var wikipedia_api_url = `https://${wikipedia_lang}.wikipedia.org/api/rest_v1/page/summary/${wikipedia_id}`
         var wikipedia_response = await fetch(wikipedia_api_url);
-        var wikipedia_data = await wikipedia_response.json();  
+        var wikipedia_data = await wikipedia_response.json();
         var wikipedia_extract = wikipedia_data['extract'];
         if (wikipedia_extract){
             var wikipedia = {
@@ -487,4 +433,3 @@ function get_parameter_from_url(param_name) {
         results = regex.exec(location.href);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
-
