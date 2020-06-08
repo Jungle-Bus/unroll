@@ -23,7 +23,7 @@ function display_examples(){
             "id": 8404844,
             "ref":" ",
             "mode":"bus",
-            "colour":"grey",            
+            "colour":"grey",
             "operator":"",
             "network":"",
             "comment": "on-demand bus",
@@ -33,7 +33,7 @@ function display_examples(){
             "id": 1667801,
             "ref":"24",
             "mode":"bus",
-            "colour":"#F78F4B",            
+            "colour":"#F78F4B",
             "operator":"",
             "network":"",
             "comment": "night bus",
@@ -48,7 +48,7 @@ function display_examples(){
             "network":"",
             "comment": "with images and wikipedia",
             "name":"Paris Métro line 6",
-        },     
+        },
     ]
     var lines_table = document.getElementById("lines_table");
     lines_table.innerHTML = display_table(lines_examples)
@@ -82,7 +82,7 @@ function display_from_overpass(use_geo){
         if (!network && !ref){
             console.error("no network and ref")
             error_network_ref.innerHTML = `<p class="w3-text-red">Please enter a line number and a network</p>`
-            return   
+            return
         }
         var overpass_url = `https://overpass-api.de/api/interpreter?data=[out:json];relation[type=route_master]`
         if (network){
@@ -95,7 +95,7 @@ function display_from_overpass(use_geo){
     }
     var lines_table = document.getElementById("lines_table");
     lines_table.innerHTML = `<i class="fa fa-spinner fa-spin"></i> searching routes ...`
-    lines_table.scrollIntoView(); 
+    lines_table.scrollIntoView();
 
 
     fetch(overpass_url)
@@ -112,7 +112,7 @@ function display_from_overpass(use_geo){
             lines_table.innerHTML = display_table(lines)
         } else {
             lines_table.innerHTML = "<p>No results :(</p>"
-        }   
+        }
     })
     .catch(function(error) {
         console.error(error.message);
@@ -133,9 +133,9 @@ function display_table(lines){
                 data-transport-mode="${tags['route_master'] || tags['mode']}"
                 data-transport-line-code="${tags['ref'] || ' '}"
                 data-transport-line-color="${tags['colour'] || 'grey'}">
-            </transport-thumbnail> 
+            </transport-thumbnail>
         </td>
-        <td><a href="/route.html?line=${tags['id']}">${tags["name"]}</a></td>
+        <td><a href="route.html?line=${tags['id']}">${tags["name"]}</a></td>
         <td>${tags["operator"]}</td>
         <td>${tags["network"]}</td>`
         if (tags["comment"]){
