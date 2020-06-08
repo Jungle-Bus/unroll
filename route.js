@@ -2,6 +2,8 @@ var line_id = get_parameter_from_url('line');
 //var line_id = 6117019 //IDF
 //var line_id = 10361922 //Abidjan
 
+var display_osmose_issues = (get_parameter_from_url('qa') == "yes") ? true : false;
+
 unroll_line(line_id)
 
 async function unroll_line(line_id){
@@ -25,6 +27,13 @@ async function unroll_line(line_id){
 
     get_and_display_wikidata_info(line_tags);
 
+    if (display_osmose_issues){
+        var osmose_issues = await get_osmose_issues(line_id)
+        if (osmose_issues.length > 0){
+            document.getElementById("osmose_issues").innerHTML = display_line_or_route_issues(osmose_issues);
+        }
+    }
+
     var trips = line_data.get_trips();
     for (i = 0; i < trips.length; i++) {
         var route_title = document.createElement("h5");
@@ -43,8 +52,18 @@ async function unroll_line(line_id){
         if (route['tags']['interval']){
             var route_schedule = document.createElement("div");
             route_schedule.classList.add("w3-container");
-            route_schedule.innerHTML = display_line_or_route_schedules(route['tags'], route_id);
+            route_schedule.innerHTML = display_line_or_route_schedules(route['tags'], route["id"]);
             trip_list.appendChild(route_schedule);
+        }
+
+        if (display_osmose_issues){
+            var osmose_issues = await get_osmose_issues(route["id"])
+            if (osmose_issues.length > 0){
+                var osmose_detail = document.createElement("div");
+                osmose_detail.classList.add("w3-container");
+                osmose_detail.innerHTML = display_line_or_route_issues(osmose_issues);
+                trip_list.appendChild(osmose_detail); 
+            }
         }
     }
 
@@ -209,6 +228,24 @@ function display_route_title(tags){
     return template
 }
 
+function display_line_or_route_issues(issues){
+    var template = `
+      <div class="w3-container w3-card w3-white w3-leftbar w3-border-red">
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>Issues</b></h5>
+          <ul>`
+
+    for (var issue of issues){
+        template += `<li>${issue['osmose_text']} : <a href="${issue['osmose_issue_id']}" target="_blank">Osmose</a> / <a href="${issue['osmose_map']}" target="_blank">Osmose Map</a>`
+    }
+    template += `
+        </ul>
+        </div>
+      </div>
+    `
+    return template
+}
+
 function create_stop_list_for_a_route(stop_list, route_colour) {
     var route_colour = route_colour || 'grey';
     var inner_html = ''
@@ -320,6 +357,23 @@ function display_credits(relation_id){
       </div>
     `
     return template
+}
+
+async function get_osmose_issues(relation_id){
+    var osmose_url = `http://osmose.openstreetmap.fr/en/api/0.3beta/issues?osm_type=relation&osm_id=${relation_id}&full=true`
+    var osmose_response = await fetch(osmose_url);
+    var osmose_data = await osmose_response.json();
+    var issues = osmose_data['issues'];
+    osmose_to_display = [];
+    for (const issue of issues){
+        var osmose_map_url = `https://osmose.openstreetmap.fr/en/map/?item=${issue['item']}&zoom=17&lat=${issue['lat']}&lon=${issue['lon']}`
+        osmose_to_display.push({
+            "osmose_issue_id": `https://osmose.openstreetmap.fr/en/error/${issue['id']}`,
+            "osmose_text": issue['title']['auto'],
+            "osmose_map": osmose_map_url
+        })
+    }
+    return osmose_to_display
 }
 
 async function get_and_display_wikidata_info(tags){
