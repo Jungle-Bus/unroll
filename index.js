@@ -1,3 +1,29 @@
+projects = {
+    "Abidjan":{
+        "line_list":"https://raw.githubusercontent.com/Jungle-Bus/AbidjanTransport_geom_ci/gh-pages/lines.csv",
+        "format": "osm-transit-extractor",
+        "qa": true
+    },
+    "IDF":{
+        "line_list":"https://raw.githubusercontent.com/Jungle-Bus/ref-fr-STIF/gh-pages/data/lignes.csv",
+        "format": "osm-transit-extractor",
+        "qa": true
+    },
+    "Kochi":{
+        "line_list":"https://raw.githubusercontent.com/Jungle-Bus/KochiTransport_geom_ci/gh-pages/lines.csv",
+        "format": "osm-transit-extractor",
+        "qa": true
+    }
+}
+
+var project_id = get_parameter_from_url('project');
+
+if (project_id){
+    if (projects[project_id]["format"] == "osm-transit-extractor"){
+        display_from_osm_transit_extractor_csv_list(projects[project_id]["line_list"], projects[project_id]["qa"])
+    }
+}
+
 function display_examples(){
     var lines_examples = [
         {
@@ -120,7 +146,38 @@ function display_from_overpass(use_geo){
     });
 }
 
-function display_table(lines){
+async function display_from_osm_transit_extractor_csv_list(url, add_qa_to_url){
+    var list_response = await fetch(url);
+    var list = await list_response.text();
+    var list_as_object = osm_transit_extractor_csv_to_json(list)
+
+    var lines_table = document.getElementById("lines_table");
+    lines_table.innerHTML = display_table(list_as_object, add_qa_to_url)
+    lines_table.scrollIntoView();
+    
+}
+
+function osm_transit_extractor_csv_to_json(csv){
+    //TODO maybe use a proper csv parser
+    var csv_lines=csv.split("\n");
+    var result = [];
+    var headers=csv_lines[0].split(",");
+    for(var i=1;i<csv_lines.length-1;i++){
+        var obj = {};
+        var current_line=csv_lines[i].split(",");
+        for(var j=0;j<headers.length;j++){
+            if (headers[j] == "line_id"){
+                obj["id"] = current_line[j].split(':')[2];
+            } else {
+                obj[headers[j]] = current_line[j];
+            }
+        }
+        result.push(obj);
+    }
+    return result;
+}
+
+function display_table(lines, display_qa = false){
     var template = `
     <table class="w3-table w3-striped w3-white">
     `
@@ -131,11 +188,11 @@ function display_table(lines){
         <td>
             <transport-thumbnail
                 data-transport-mode="${tags['route_master'] || tags['mode']}"
-                data-transport-line-code="${tags['ref'] || ' '}"
+                data-transport-line-code="${tags['ref'] || tags['code'] ||' '}"
                 data-transport-line-color="${tags['colour'] || 'grey'}">
             </transport-thumbnail>
         </td>
-        <td><a href="route.html?line=${tags['id']}">${tags["name"]}</a></td>
+        <td><a href="route.html?line=${tags['id']}${display_qa ? "&qa=yes" : ""}">${tags["name"]}</a></td>
         <td>${tags["operator"]}</td>
         <td>${tags["network"]}</td>`
         if (tags["comment"]){
