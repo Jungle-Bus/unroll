@@ -77,7 +77,9 @@ function display_examples(){
         },
     ]
     var lines_table = document.getElementById("lines_table");
-    lines_table.innerHTML = display_table(lines_examples)
+    var lines_stats = document.getElementById("lines_stats");
+    lines_stats.innerHTML = "";
+    display_table(lines_examples, lines_table)
     lines_table.scrollIntoView();
 }
 
@@ -120,8 +122,10 @@ function display_from_overpass(use_geo){
         overpass_url += `;out tags;`
     }
     var lines_table = document.getElementById("lines_table");
+    var lines_stats = document.getElementById("lines_stats");
+    lines_stats.innerHTML = "";
     lines_table.innerHTML = `<i class="fa fa-spinner fa-spin"></i> searching routes ...`
-    lines_table.scrollIntoView();
+    lines_stats.scrollIntoView();
 
 
     fetch(overpass_url)
@@ -132,10 +136,21 @@ function display_from_overpass(use_geo){
         var lines = []
         for (var line of data['elements']){
             line['tags']['id'] = line['id'];
+            line['tags']['mode'] = line['tags']['route_master'];
+            line['tags']['code'] = line['tags']['ref'];
+            line['tags']["thumbnail"] = `
+            <transport-thumbnail
+                data-transport-mode="${line['tags']['mode']}"
+                data-transport-line-code="${line['tags']['code'] ||' '}"
+                data-transport-line-color="${line['tags']['colour'] || 'grey'}">
+            </transport-thumbnail>`;
             lines.push(line['tags'])
         }
         if (lines.length != 0){
-            lines_table.innerHTML = display_table(lines)
+            console.log(lines)
+            display_table(lines, lines_table)
+            lines_stats.innerHTML = display_stats(lines);
+            lines_stats.scrollIntoView();
         } else {
             lines_table.innerHTML = "<p>No results :(</p>"
         }
@@ -155,18 +170,25 @@ function display_from_osm_transit_extractor_csv_list(url, add_qa_to_url){
             results.data.splice(-1, 1);
             for (var line of results.data){
                 line['id'] = line['line_id'].split(':')[2];
+                line["thumbnail"] = `
+            <transport-thumbnail
+                data-transport-mode="${line['mode']}"
+                data-transport-line-code="${line['code'] ||' '}"
+                data-transport-line-color="${line['colour'] || 'grey'}">
+            </transport-thumbnail>`
             }
-            var lines_table = document.getElementById("lines_table");
-            lines_table.innerHTML = display_table(results.data, add_qa_to_url)
-            lines_table.scrollIntoView();            
+            display_table(results.data, lines_table, add_qa_to_url)
+
+            var lines_stats = document.getElementById("lines_stats");
+            lines_stats.innerHTML = display_stats(results.data);
+            lines_stats.scrollIntoView();
         }
     });  
 }
 
-function display_table(lines, display_qa = false, display_stats = true){
-    var template = "";
+function display_stats(lines){
     var line_nb = lines.length;
-    if (display_stats && line_nb > 10){
+    if (line_nb > 10){
         var networks = [...new Set(lines.map(x => x.network))];
         var networks_nb = networks.length;
         var operators = [...new Set(lines.map(x => x.operator))];
@@ -174,7 +196,7 @@ function display_table(lines, display_qa = false, display_stats = true){
         var modes = [...new Set(lines.map(x => x.mode))];
         var route_types = [...new Set(lines.map(x => x.route_master))];
         var modes_nb = Math.max(modes.length, route_types.length);
-        template += `
+        var template = `
         <div class="w3-row-padding w3-margin-bottom w3-margin-top">
         <div class="w3-quarter">
             <div class="w3-container w3-junglebus w3-text-white w3-padding-16">
@@ -218,32 +240,60 @@ function display_table(lines, display_qa = false, display_stats = true){
         </div>
         </div>
         `
-
+    } else {
+        var template = ""; 
     }
-    template += `
-    <table class="w3-table w3-striped w3-white">
-    `
-
-    for (const tags of lines) {
-        template+=`
-        <tr>
-        <td>
-            <transport-thumbnail
-                data-transport-mode="${tags['route_master'] || tags['mode']}"
-                data-transport-line-code="${tags['ref'] || tags['code'] ||' '}"
-                data-transport-line-color="${tags['colour'] || 'grey'}">
-            </transport-thumbnail>
-        </td>
-        <td><a href="route.html?line=${tags['id']}${display_qa ? "&qa=yes" : ""}">${tags["name"]}</a></td>
-        <td>${tags["operator"]}</td>
-        <td>${tags["network"]}</td>`
-        if (tags["comment"]){
-            template+= `<td>${tags["comment"]}</td>`
-        }
-        template+=`</tr>`
-    }
-    template+= `
-    </table>`
-
     return template
 }
+
+function display_table(lines, line_document_element, display_qa = false){
+    if (lines.length > 10){
+        var table = new Tabulator(line_document_element, {
+            data:lines,
+            maxHeight:"100%",
+            movableRows:true,
+            layout:"fitColumns",
+            groupBy:"mode",
+            pagination:"local",
+            paginationSize:20,
+            columns:[
+                {title:"", field:"thumbnail",  formatter:"html"},
+                {title:"Name", field:"name", headerFilter:"input"},
+                {title:"Operator", field:"operator", headerFilter:"input"},
+                {title:"Network", field:"network", headerFilter:"input"},                
+            ],
+            rowClick:function(e, row){
+                var current_line_id = row.getData().id;
+                window.location.href = `route.html?line=${current_line_id}${display_qa ? "&qa=yes" : ""}`;
+            },
+       });
+    } else {
+        var template = `
+        <table class="w3-table w3-striped w3-white">
+        `
+    
+        for (const tags of lines) {
+            template+=`
+            <tr>
+            <td>
+                <transport-thumbnail
+                    data-transport-mode="${tags['route_master'] || tags['mode']}"
+                    data-transport-line-code="${tags['ref'] || tags['code'] ||' '}"
+                    data-transport-line-color="${tags['colour'] || 'grey'}">
+                </transport-thumbnail>
+            </td>
+            <td><a href="route.html?line=${tags['id']}${display_qa ? "&qa=yes" : ""}">${tags["name"]}</a></td>
+            <td>${tags["operator"]}</td>
+            <td>${tags["network"]}</td>`
+            if (tags["comment"]){
+                template+= `<td>${tags["comment"]}</td>`
+            }
+            template+=`</tr>`
+        }
+        template+= `
+        </table>`
+
+        line_document_element.innerHTML = template;
+    }
+}
+

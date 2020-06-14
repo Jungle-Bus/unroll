@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://unpkg.com/tabulator-tables@4.6.3/dist/css/materialize/tabulator_materialize.min.css" rel="stylesheet">
     <link rel="stylesheet" href="main.css">
   </head>
 
@@ -62,9 +63,8 @@
 <div class="w3-content" style="max-width:1100px;">
 
   <div class="w3-container w3-margin-top">
-  <div class="w3-table w3-striped w3-white" id="lines_table"></div>
-
-
+    <div id="lines_stats"></div>
+    <div id="lines_table"></div>
 
   </div>
 
@@ -102,6 +102,7 @@ document.getElementsByClassName("tablink")[2].click();
 </script>
 <script src="https://unpkg.com/jungle_bus_web_components@1.0.1/src/transport_thumbnail.js"></script>
 <script src="assets/papaparse.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.6.3/dist/js/tabulator.min.js"></script>
 <script src="commons.js"></script>
 <script src="index.js"></script>
 </body>
