@@ -146,35 +146,21 @@ function display_from_overpass(use_geo){
     });
 }
 
-async function display_from_osm_transit_extractor_csv_list(url, add_qa_to_url){
-    var list_response = await fetch(url);
-    var list = await list_response.text();
-    var list_as_object = osm_transit_extractor_csv_to_json(list)
-
-    var lines_table = document.getElementById("lines_table");
-    lines_table.innerHTML = display_table(list_as_object, add_qa_to_url)
-    lines_table.scrollIntoView();
-    
-}
-
-function osm_transit_extractor_csv_to_json(csv){
-    //TODO maybe use a proper csv parser
-    var csv_lines=csv.split("\n");
-    var result = [];
-    var headers=csv_lines[0].split(",");
-    for(var i=1;i<csv_lines.length-1;i++){
-        var obj = {};
-        var current_line=csv_lines[i].split(",");
-        for(var j=0;j<headers.length;j++){
-            if (headers[j] == "line_id"){
-                obj["id"] = current_line[j].split(':')[2];
-            } else {
-                obj[headers[j]] = current_line[j];
+function display_from_osm_transit_extractor_csv_list(url, add_qa_to_url){
+    Papa.parse(url, {
+        download: true,
+        header: true,
+        dynamicTyping: true,
+        complete: function(results) {
+            results.data.splice(-1, 1);
+            for (var line of results.data){
+                line['id'] = line['line_id'].split(':')[2];
             }
+            var lines_table = document.getElementById("lines_table");
+            lines_table.innerHTML = display_table(results.data, add_qa_to_url)
+            lines_table.scrollIntoView();            
         }
-        result.push(obj);
-    }
-    return result;
+    });  
 }
 
 function display_table(lines, display_qa = false, display_stats = true){
