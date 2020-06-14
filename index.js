@@ -177,8 +177,64 @@ function osm_transit_extractor_csv_to_json(csv){
     return result;
 }
 
-function display_table(lines, display_qa = false){
-    var template = `
+function display_table(lines, display_qa = false, display_stats = true){
+    var template = "";
+    var line_nb = lines.length;
+    if (display_stats && line_nb > 10){
+        var networks = [...new Set(lines.map(x => x.network))];
+        var networks_nb = networks.length;
+        var operators = [...new Set(lines.map(x => x.operator))];
+        var operators_nb = operators.length;
+        var modes = [...new Set(lines.map(x => x.mode))];
+        var route_types = [...new Set(lines.map(x => x.route_master))];
+        var modes_nb = Math.max(modes.length, route_types.length);
+        template += `
+        <div class="w3-row-padding w3-margin-bottom w3-margin-top">
+        <div class="w3-quarter">
+            <div class="w3-container w3-junglebus w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-code-fork w3-xxxlarge"></i></div>
+            <div class="w3-right">
+                <h3>${line_nb}</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Routes</h4>
+            </div>
+        </div>
+        <div class="w3-quarter">
+            <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-briefcase w3-xxxlarge"></i></div>
+            <div class="w3-right">
+                <h3>${networks_nb}</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Networks</h4>
+            </div>
+        </div>
+        <div class="w3-quarter">
+            <div class="w3-container w3-junglebus w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-home w3-xxxlarge"></i></div>
+            <div class="w3-right">
+                <h3>${operators_nb}</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Operators</h4>
+            </div>
+        </div>
+        <div class="w3-quarter">
+            <div class="w3-container w3-orange w3-text-white w3-padding-16">
+            <div class="w3-left"><i class="fa fa-bus w3-xxxlarge"></i></div>
+            <div class="w3-right">
+                <h3>${modes_nb}</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Modes</h4>
+            </div>
+        </div>
+        </div>
+        `
+
+    }
+    template += `
     <table class="w3-table w3-striped w3-white">
     `
 

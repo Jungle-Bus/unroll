@@ -3,7 +3,7 @@
     --jungle-color-orange: #fbb81d;
 }
 .w3-junglebus {
-    color: var(--jungle-color-orange) !important;
+    color: var(--jungle-color-orange);
     background-color: var(--jungle-color-blue) !important;
 }
 .w3-text-junglebus {
