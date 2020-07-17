@@ -35,9 +35,9 @@ async function unroll_line(line_id){
     }
 
     var trips = line_data.get_trips();
-    for (i = 0; i < trips.length; i++) {
+    for (var i = 0; i < trips.length; i++) {
         var route_title = document.createElement("h5");
-        route = trips[i];
+        var route = trips[i];
         route_title.innerHTML = display_route_title(route['tags']);
         trip_list.appendChild(route_title);
 
