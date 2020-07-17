@@ -360,7 +360,7 @@ function display_credits(relation_id){
 }
 
 async function get_osmose_issues(relation_id){
-    var osmose_url = `https://osmose.openstreetmap.fr/en/api/0.3beta/issues?osm_type=relation&osm_id=${relation_id}&full=true`
+    var osmose_url = `https://osmose.openstreetmap.fr/en/api/0.3/issues?osm_type=relation&osm_id=${relation_id}&full=true`
     var osmose_response = await fetch(osmose_url);
     var osmose_data = await osmose_response.json();
     var issues = osmose_data['issues'];
