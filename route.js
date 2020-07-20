@@ -26,6 +26,7 @@ async function unroll_line(line_id){
     document.getElementById("line_schedules").innerHTML = display_line_or_route_schedules(line_tags, line_id);
 
     get_and_display_wikidata_info(line_tags);
+    get_and_display_external_info(line_id, line_tags);
 
     if (display_osmose_issues){
         var osmose_issues = await get_osmose_issues(line_id)
@@ -469,6 +470,27 @@ async function get_and_display_wikidata_info(tags){
             "url": `https://www.wikidata.org/wiki/${wikidata_id}`
         }
         document.getElementById("line_commons").innerHTML = display_line_images(wikidata_and_commons);
+    }
+}
+
+function get_and_display_external_info(relation_id, tags){
+    if (tags["ref:FR:STIF:ExternalCode_Line"]){
+        var template = `
+        <div class="w3-container w3-card w3-white w3-margin-bottom">
+          <div class="w3-container">
+            <h5 class="w3-opacity"><b>External links</b></h5>
+            <p>
+                <img src="https://www.vianavigo.com/favicon.ico" alt="vianavigo icon" class="w3-margin-right" style="width:24px">
+                <a href="https://www.vianavigo.com/en/timetables/bus/line:0:${tags["ref:FR:STIF:ExternalCode_Line"]}" target="_blank">See the timetable on vianavigo.com</a>
+            </p>
+            <p>
+                <img src="https://data.iledefrance-mobilites.fr/favicon.ico" alt="idfm opendata icon" class="w3-margin-right" style="width:24px">
+                <a href="https://ref-lignes-stif.5apps.com/line.html?osm_relation=${relation_id}" target="_blank">Compare open data and OpenStreetMap</a>
+            </p>
+          </div>
+        </div>
+      `;
+      document.getElementById("line_external_links").innerHTML = template;
     }
 }
 
