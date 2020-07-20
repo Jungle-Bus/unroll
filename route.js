@@ -250,9 +250,9 @@ function display_line_or_route_issues(issues){
 function create_stop_list_for_a_route(stop_list, route_colour) {
     var route_colour = route_colour || 'grey';
     var inner_html = ''
-    for (const stop of stop_list) {
-
-        if (stop != stop_list[stop_list.length - 1]) {
+    for (var i = 0; i < stop_list.length; i++) {
+        stop = stop_list[i]
+        if (i != stop_list.length - 1) {
             var border_color = route_colour;
         } else { // remove the border so the stop list ends with a dot
             var border_color = "#FFF";
