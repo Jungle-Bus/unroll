@@ -22,10 +22,11 @@ async function unroll_line(line_id){
 
     document.getElementById("line_title").innerHTML = display_line_title(line_tags);
     document.getElementById("line_detail").innerHTML = display_line_details(line_tags, trip_number);
-    document.getElementById("line_fares").innerHTML = display_line_fares(line_tags);
     document.getElementById("line_schedules").innerHTML = display_line_or_route_schedules(line_tags, line_id);
 
     get_and_display_wikidata_info(line_tags);
+    get_and_display_line_fares(line_tags);
+    get_and_display_on_demand_info(line_id, line_tags);
     get_and_display_external_info(line_id, line_tags);
 
     if (display_osmose_issues){
@@ -120,12 +121,7 @@ function display_line_details(tags, trip_number){
 }
 
 function display_line_fares(tags){
-    if (tags['charge']){
-        var fare = tags['charge']
-    } else {
-        var fare = "Unknown price"
-    }
-
+    var fare = tags['charge']
     var template = `
       <div class="w3-container w3-card w3-white w3-margin-bottom">
         <div class="w3-container">
@@ -136,6 +132,12 @@ function display_line_fares(tags){
       </div>
     `
     return template
+}
+
+function get_and_display_line_fares(tags){
+    if (tags['charge']){
+        document.getElementById("line_fares").innerHTML = display_line_fares(tags);
+    }
 }
 
 function display_line_or_route_schedules(tags, relation_id){
@@ -471,6 +473,46 @@ async function get_and_display_wikidata_info(tags){
         }
         document.getElementById("line_commons").innerHTML = display_line_images(wikidata_and_commons);
     }
+}
+
+function get_and_display_on_demand_info(relation_id, tags){
+    if (tags['on_demand'] === 'yes') {
+        var title = "This line has on demand services.";
+    }
+    else if (tags['on_demand'] === 'only') {
+        var title = "This line is on demand.";
+    } 
+    else if (tags['hail_and_ride'] === 'partial' || tags['hail_and_ride'] === 'yes') {
+        var title = "This line has 'hail and ride' sections.";
+    } else {
+        return
+    }
+    
+
+    var description = tags['on_demand:description'] || tags['hail_and_ride:description'];
+    var contact_phone = tags['on_demand:phone'] || tags['phone'] || tags['contact:phone'];
+    var contact_website = tags['on_demand:website'] || tags['website'] || tags['contact:website'];
+
+    var template = `
+      <div class="w3-container w3-card w3-white w3-margin-bottom">
+        <div class="w3-container">
+          <h5 class="w3-opacity"><b>On demand conditions</b></h5>
+          <p>${title}</p>`
+          
+    if (description) {
+        template += `<p><i class="fa fa-info fa-fw w3-margin-right w3-large w3-text-junglebus"></i>${description}</p>`
+    }
+    if (contact_phone) {
+        template += `<p><i class="fa fa-phone fa-fw w3-margin-right w3-large w3-text-junglebus"></i>${contact_phone}</p>`
+    }
+    if (contact_website) {
+        template += `<p><i class="fa fa-external-link fa-fw w3-margin-right w3-large w3-text-junglebus"></i><a href="${contact_website}" target="_blank">${contact_website}</a></p>`
+    }
+    template += `
+          </div>
+      </div>
+    `
+    document.getElementById("line_on_demand_info").innerHTML = template
 }
 
 function get_and_display_external_info(relation_id, tags){
