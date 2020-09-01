@@ -282,9 +282,12 @@ function init_route_map(tags, stop_list, relation_id){
         <div class="w3-container">
           <h5 class="w3-opacity"><b> Map and stops</b></h5>
           <h6 class="w3-text-junglebus"><i class="fa fa-edit fa-fw w3-margin-right"></i><a href="https://www.openstreetmap.org/edit?editor=remote&relation=${relation_id}" target="_blank">Edit trip </a></h6>
-          <p>Origin: ${tags['from'] || '??'}</p>
-          <p>Destination: ${tags['to'] || '??'}</p>
-          <p>Travel time: ${tags['duration'] || 'unknown'}</p>
+          <p><b>${tags['name'] || '??'}</b></p>
+          <ul>
+                <li>Origin: ${tags['from'] || '??'}
+                <li>Destination: ${tags['to'] || '??'}
+                <li>Travel time: ${tags['duration'] || 'unknown'}
+            </ul>
           <p>${stop_list}</p>
           <div id="map_${relation_id}" style="height: 280px;"></div>
         </div>
