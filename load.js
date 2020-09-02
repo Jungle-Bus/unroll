@@ -17,9 +17,9 @@ if (network && ref){
         if (data['elements'].length > 0){
             var route_id = data['elements'][0]['id'];
             if (qa){
-                window.location.href = `/route.html?line=${route_id}&qa=${qa}`;
+                window.location.href = `route.html?line=${route_id}&qa=${qa}`;
             } else {
-                window.location.href = `/route.html?line=${route_id}`;
+                window.location.href = `route.html?line=${route_id}`;
             }
             
         } else {
