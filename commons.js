@@ -5,8 +5,9 @@ function get_parameter_from_url(param_name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 
-//handle the translation
+//detect language, get the appropriate translation file, translate html content
 var available_languages = ["en"]
+var i18n_messages = {}
 async function load_translation_strings(){
     var user_language = navigator.language;
     if (available_languages.includes(user_language)){
@@ -19,8 +20,17 @@ async function load_translation_strings(){
             return data.json()
         })
         .then(function(data) {
-            _.setTranslation(data);
+            i18n_messages = data
         })
+        .catch(function(error) {
+            console.error(`error loading ${i18n_file}: ${error}`);
+        });
+
+    var html_elements_to_translate = document.querySelectorAll("[data-i18n]");
+    html_elements_to_translate.forEach(function(elem) {
+        elem.textContent = i18n_messages[elem.getAttribute("data-i18n")]
+    });
+
 
     //TODO : translate osmose issues ?
 }

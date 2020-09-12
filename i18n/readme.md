@@ -1,20 +1,24 @@
-When the code is updated:
-- extract strings to translate as xx.po
-- convert po to json
-- push xx.json to transifex
+TODO 
+- transifex push on merge on master
+- transifex pull when translation is complete
 
-When the translations are updated:
-- get *.json from transifex
+## Principles
+
+Do not modify `lang.json` files in this repo. Translations happen on transifex only.
 
 Client-side, on load:
 - detect language
 - load appropriate json file
 - replace all strings by their translations in js, and in html
 
-TODO 
-- add _() and rewrite_html everywhere
-- handle *.pot (ou qqch de ce genre pour avoir le fichier en et un fichier source à pousser sur transifex)
-- écrire les scripts travis qui vont bien
-xgettext *.js --from-code=UTF-8 --output=i18n/en.po
-python2 po2json.py ../en.po
-(réécrire polib en py3 ?)
+
+## Workflow
+
+When new messages are added into the code:
+- add them into `en.json` file
+- use `i18n_message['translation_key']` into the code
+- push `en.json` file to transifex on merge on master branch (automatically done by travis) // TODO
+
+When the translations are updated:
+- pull `lang.json` from transifex
+- check if `lang` is an available language (from commons.js)

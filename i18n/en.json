@@ -1,1 +1,28 @@
-{"No route has been found :(": "No route has been found :(", "Oops, something went wrong!": "Oops, something went wrong!", "Search some route on the home page.": "blge."}
+{
+    "No route has been found :(": "No route has been found :(",
+    "Oops, something went wrong!": "Oops, something went wrong!",
+    "guessing route ..." : "guessing route ...",
+    "Home": "Home",
+    "Search some route on the home page.": "Search some route on the home page.",
+
+    "No results": "No results",
+    "searching routes ...": "searching routes ...",
+    "Please enter a line number and a network": "Please enter a line number and a network",
+    "Routes":"Routes",
+    "Networks": "Networks",
+    "Operators": "Operators",
+    "Modes": "Modes",
+    "Name": "Name",
+    "Operator": "Operator",
+    "Network": "Network",
+    "Search": "Search",
+    "Town": "Town",
+    "Examples": "Examples",
+    "Search routes": "Search routes",
+    "Line number": "Line number",
+    "Operator / Network": "Operator / Network",
+    "Search routes by town name": "Search routes by town name",
+    "Display routes in town": "Display routes in town",
+    "Check out some examples to get inspired": "Check out some examples to get inspired",
+    "Display examples": "Display examples"
+}

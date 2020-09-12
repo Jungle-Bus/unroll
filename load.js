@@ -7,7 +7,6 @@ main()
 
 async function main(){
     await load_translation_strings();
-    rewrite_html()
 
     if (network && ref){
         var overpass_url = `
@@ -29,18 +28,18 @@ async function main(){
                 }
                 
             } else {
-                status = _("No route has been found :(")
+                status = i18n_messages["No route has been found :("];
                 document.getElementById("message").innerHTML = display_error(status);
             }
         })
         .catch(function(error) {
             console.error(error.message);
-            status = _("Oops, something went wrong!")
+            status = i18n_messages["Oops, something went wrong!"]
             document.getElementById("message").innerHTML = display_error(status);
         });
     
     } else {
-        status = _("Search some route on the home page.")
+        status = i18n_messages["Search some route on the home page."]
         document.getElementById("message").innerHTML = display_error(status);
     }
     
@@ -54,10 +53,3 @@ async function main(){
     }    
 }
 
-function rewrite_html(){
-    var init_message = '<i class="fa fa-spinner fa-spin"></i> '
-    init_message += _("guessing route ...")
-    document.getElementById("message").innerHTML = init_message;
-    document.getElementById("home_link").innerHTML = _("Home");
-
-}
