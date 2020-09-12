@@ -42,14 +42,14 @@ async function main(){
         status = i18n_messages["Search some route on the home page."]
         document.getElementById("message").innerHTML = display_error(status);
     }
-    
-    function display_error(error_message){
-        var template = `
-        <div class="w3-panel w3-pale-red w3-leftbar w3-border-red">
-            ${error_message}
-        </div>
-        `
-        return template
-    }    
+       
 }
 
+function display_error(error_message){
+    var template = `
+    <div class="w3-panel w3-pale-red w3-leftbar w3-border-red">
+        ${error_message}
+    </div>
+    `
+    return template
+}
