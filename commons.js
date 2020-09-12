@@ -6,12 +6,14 @@ function get_parameter_from_url(param_name) {
 }
 
 //detect language, get the appropriate translation file, translate html content
-var available_languages = ["en"]
+var available_languages = ["en"];
+var current_language = "en"; //also used to get Osmose issue and Wikipedia extract
 var i18n_messages = {}
 async function load_translation_strings(){
     var user_language = navigator.language;
     if (available_languages.includes(user_language)){
-        var i18n_file = `i18n/${user_language}.json`
+        var i18n_file = `i18n/${user_language}.json`;
+        current_language = user_language;
     } else {
         var i18n_file = "i18n/en.json"
     }
@@ -30,8 +32,5 @@ async function load_translation_strings(){
     html_elements_to_translate.forEach(function(elem) {
         elem.textContent = i18n_messages[elem.getAttribute("data-i18n")]
     });
-
-
-    //TODO : translate osmose issues ?
 }
 
