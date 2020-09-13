@@ -16,11 +16,14 @@ projects = {
     }
 }
 
-var project_id = get_parameter_from_url('project');
+async function on_load(){
+    await load_translation_strings();
+    var project_id = get_parameter_from_url('project');
 
-if (project_id){
-    if (projects[project_id]["format"] == "osm-transit-extractor"){
-        display_from_osm_transit_extractor_csv_list(projects[project_id]["line_list"], projects[project_id]["qa"])
+    if (project_id){
+        if (projects[project_id]["format"] == "osm-transit-extractor"){
+            display_from_osm_transit_extractor_csv_list(projects[project_id]["line_list"], projects[project_id]["qa"])
+        }
     }
 }
 
@@ -109,7 +112,7 @@ function display_from_overpass(use_geo){
         var error_network_ref = document.getElementById("error_network_ref");
         if (!network && !ref){
             console.error("no network and ref")
-            error_network_ref.innerHTML = `<p class="w3-text-red">Please enter a line number and a network</p>`
+            error_network_ref.innerHTML = `<p class="w3-text-red">${i18n_messages["Please enter a line number and a network"]}</p>`
             return
         }
         var overpass_url = `https://overpass-api.de/api/interpreter?data=[out:json];relation[type=route_master]`
@@ -124,7 +127,7 @@ function display_from_overpass(use_geo){
     var lines_table = document.getElementById("lines_table");
     var lines_stats = document.getElementById("lines_stats");
     lines_stats.innerHTML = "";
-    lines_table.innerHTML = `<i class="fa fa-spinner fa-spin"></i> searching routes ...`
+    lines_table.innerHTML = `<i class="fa fa-spinner fa-spin"></i> ${i18n_messages["searching routes ..."]}`
     lines_stats.scrollIntoView();
 
 
@@ -147,17 +150,16 @@ function display_from_overpass(use_geo){
             lines.push(line['tags'])
         }
         if (lines.length != 0){
-            console.log(lines)
             display_table(lines, lines_table)
             lines_stats.innerHTML = display_stats(lines);
             lines_stats.scrollIntoView();
         } else {
-            lines_table.innerHTML = "<p>No results :(</p>"
+            lines_table.innerHTML = `<p>${i18n_messages["No results"]}</p>`;
         }
     })
     .catch(function(error) {
         console.error(error.message);
-        lines_table.innerHTML = "Oops, something went wrong!"
+        lines_table.innerHTML = i18n_messages["Oops, something went wrong!"];
     });
 }
 
@@ -205,7 +207,7 @@ function display_stats(lines){
                 <h3>${line_nb}</h3>
             </div>
             <div class="w3-clear"></div>
-            <h4>Routes</h4>
+            <h4>${i18n_messages["Routes"]}</h4>
             </div>
         </div>
         <div class="w3-quarter">
@@ -215,7 +217,7 @@ function display_stats(lines){
                 <h3>${networks_nb}</h3>
             </div>
             <div class="w3-clear"></div>
-            <h4>Networks</h4>
+            <h4>${i18n_messages["Networks"]}</h4>
             </div>
         </div>
         <div class="w3-quarter">
@@ -225,7 +227,7 @@ function display_stats(lines){
                 <h3>${operators_nb}</h3>
             </div>
             <div class="w3-clear"></div>
-            <h4>Operators</h4>
+            <h4>${i18n_messages["Operators"]}</h4>
             </div>
         </div>
         <div class="w3-quarter">
@@ -235,7 +237,7 @@ function display_stats(lines){
                 <h3>${modes_nb}</h3>
             </div>
             <div class="w3-clear"></div>
-            <h4>Modes</h4>
+            <h4>${i18n_messages["Modes"]}</h4>
             </div>
         </div>
         </div>
@@ -258,9 +260,9 @@ function display_table(lines, line_document_element, display_qa = false){
             paginationSize:20,
             columns:[
                 {title:"", field:"thumbnail",  formatter:"html"},
-                {title:"Name", field:"name", headerFilter:"input"},
-                {title:"Operator", field:"operator", headerFilter:"input"},
-                {title:"Network", field:"network", headerFilter:"input"},                
+                {title:i18n_messages["Name"], field:"name", headerFilter:"input"},
+                {title:i18n_messages["Operator"], field:"operator", headerFilter:"input"},
+                {title:i18n_messages["Network"], field:"network", headerFilter:"input"},                
             ],
             rowClick:function(e, row){
                 var current_line_id = row.getData().id;
@@ -296,4 +298,3 @@ function display_table(lines, line_document_element, display_qa = false){
         line_document_element.innerHTML = template;
     }
 }
-

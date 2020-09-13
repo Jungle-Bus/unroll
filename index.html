@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="main.css">
   </head>
 
-<body class="w3-light-grey">
+<body class="w3-light-grey" onload="on_load()">
 
   <header class="w3-container w3-junglebus">
     <img src="img/Logo_Unroll.png" alt="Logo" class="w3-left w3-margin-right" style="height:80px">
@@ -23,38 +23,38 @@
   <div class="w3-display-left w3-padding w3-col l6 m8">
 
     <div class="w3-bar w3-black">
-      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Search');"><i class="fa fa-search w3-margin-right"></i>Search</button>
-      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Geo');"><i class="fa fa-street-view w3-margin-right"></i>Town</button>
-      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Examples');"><i class="fa fa-exclamation w3-margin-right"></i>Examples</button>
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Search');"><i class="fa fa-search w3-margin-right"></i><span data-i18n="Search">Search</span></button>
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Geo');"><i class="fa fa-street-view w3-margin-right"></i><span data-i18n="Town">Town</span></button>
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Examples');"><i class="fa fa-exclamation w3-margin-right"></i><span data-i18n="Examples">Examples</span></button>
     </div>
 
     <!-- Tabs -->
     <div id="Search" class="w3-container w3-white w3-padding-16 myLink">
-      <h3>Search routes</h3>
+      <h3 data-i18n="Search routes">Search routes</h3>
       <p id="error_network_ref"></p>
       <div class="w3-row-padding" style="margin:0 -16px;">
         <div class="w3-half">
-          <label>Line number</label>
+          <label data-i18n="Line number">Line number</label>
           <input id="search_ref" class="w3-input w3-border" type="text" placeholder="393">
         </div>
         <div class="w3-half">
-          <label>Operator / Network</label>
+          <label data-i18n="Operator / Network">Operator / Network</label>
           <input id="search_network" class="w3-input w3-border" type="text" placeholder="RATP">
         </div>
       </div>
-      <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(false)">Search</button></p>
+      <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(false)" data-i18n="Search">Search</button></p>
     </div>
 
     <div id="Geo" class="w3-container w3-white w3-padding-16 myLink">
-      <h3>Search routes by town name</h3>
+      <h3 data-i18n="Search routes by town name">Search routes by town name</h3>
       <p id="error_town"></p>
       <input id="search_town" class="w3-input w3-border" type="text" placeholder="Monaco">
-      <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(true)">Display routes in town</button></p>
+      <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(true)" data-i18n="Display routes in town">Display routes in town</button></p>
     </div>
 
     <div id="Examples" class="w3-container w3-white w3-padding-16 myLink">
-      <h3>Check out some examples to get inspired</h3>
-      <p><button class="w3-button w3-dark-grey" onclick="display_examples()">Display examples</button></p>
+      <h3 data-i18n="Check out some examples to get inspired">Check out some examples to get inspired</h3>
+      <p><button class="w3-button w3-dark-grey" onclick="display_examples()" data-i18n="Display examples">Display examples</button></p>
     </div>
 
   </div>
