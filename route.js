@@ -493,7 +493,7 @@ function get_and_display_on_demand_info(relation_id, tags){
         var title = i18n_messages["This line is on demand."];
     } 
     else if (tags['hail_and_ride'] === 'partial' || tags['hail_and_ride'] === 'yes') {
-        var title = i18n_messages["This line has 'hail and ride' sections."];
+        var title = i18n_messages["There are some sections on this route with no fixed stops, where you can get on or off the vehicle anywhere along the road by giving a sign to the driver"];
     } else {
         return
     }

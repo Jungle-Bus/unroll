@@ -45,7 +45,7 @@ function display_examples(){
             "colour":"grey",
             "operator":"",
             "network":"",
-            "comment": "with fare and schedules",
+            "comment": i18n_messages["with fare and schedules"],
             "name":"bus 37: Gare Sud↔Yopougon Camp Militaire",
         },
         {
@@ -55,7 +55,7 @@ function display_examples(){
             "colour":"grey",
             "operator":"",
             "network":"",
-            "comment": "on-demand bus",
+            "comment": i18n_messages["on-demand bus"],
             "name":"Bus Filéo Saint-Pathus : Roissypole ↔ Saint-Pathus"
         },
         {
@@ -65,7 +65,7 @@ function display_examples(){
             "colour":"#F78F4B",
             "operator":"",
             "network":"",
-            "comment": "night bus",
+            "comment": i18n_messages["night bus"],
             "name":"Noctilien N24: Gare de Sartrouville ↔ Châtelet "
         },
         {
@@ -75,7 +75,7 @@ function display_examples(){
             "colour":"#75c695",
             "operator":"",
             "network":"",
-            "comment": "with images and wikipedia",
+            "comment": i18n_messages["with images and wikipedia"],
             "name":"Paris Métro line 6",
         },
     ]
