@@ -208,7 +208,7 @@ function display_line_images(commons_images){
           <h6 class="w3-text-junglebus"><i class="fa fa-wikipedia-w fa-fw w3-margin-right"></i><a href="${commons_images['url']}" target="_blank">${i18n_messages["See on Wikidata"]} </a></h6>`
 
     for (var image of commons_images['images_list']){
-        template += `<img src="${image}" alt="image from wikimedia commons" class="">   `
+        template += `<img src="${image}" alt="image from wikimedia commons" title="image from wikimedia commons" class="">   `
     }
     template += `
         </div>

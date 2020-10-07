@@ -23,4 +23,7 @@ This project has been developed by the [Jungle Bus](http://junglebus.io/) team.
 
 The code in this repository is under the GPL-3.0 license.
 
+The front cover image is adapted from a photo of a Transisère bus by Anthony Levrot, License CC BY-SA 4.0 (source picture on [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Iveco_Evadys_n%C2%B08288_(vue_avant_gauche)_-_Transis%C3%A8re_(Lumbin).jpg)).
+ 
+
 ![Jungle Bus Logo](https://github.com/Jungle-Bus/resources/raw/master/logo/Logo_Jungle_Bus.png)
