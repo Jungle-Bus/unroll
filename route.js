@@ -476,6 +476,7 @@ async function get_and_display_wikidata_info(tags){
         }
     }
 
+    wikidata_id = wikidata_id || network_wikidata_id || operator_wikidata_id;
     if (images.length > 0){
         var wikidata_and_commons = {
             "images_list": images,
