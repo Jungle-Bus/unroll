@@ -253,7 +253,6 @@ function display_table(lines, line_document_element, display_qa = false){
         var table = new Tabulator(line_document_element, {
             data:lines,
             maxHeight:"100%",
-            movableRows:true,
             layout:"fitColumns",
             groupBy:"mode",
             pagination:"local",
