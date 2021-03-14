@@ -147,7 +147,10 @@ function display_from_overpass(use_geo){
                 data-transport-line-code="${line['tags']['code'] ||' '}"
                 data-transport-line-color="${line['tags']['colour'] || 'grey'}">
             </transport-thumbnail>`;
-            lines.push(line['tags'])
+            var not_pt_modes = ['bicycle', 'canoe', 'detour', 'fitness_trail', 'foot', 'hiking', 'horse', 'inline_skates', 'mtb', 'nordic_walking', 'pipeline', 'piste', 'power', 'proposed', 'road', 'running', 'ski', 'historic', 'path', 'junction', 'tracks'];
+            if (!(not_pt_modes.includes(line['tags']['mode']))) {
+            	lines.push(line['tags'])
+            }
         }
         if (lines.length != 0){
             display_table(lines, lines_table)
