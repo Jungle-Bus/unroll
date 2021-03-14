@@ -258,6 +258,9 @@ function display_table(lines, line_document_element, display_qa = false){
             maxHeight:"100%",
             layout:"fitColumns",
             groupBy:"mode",
+            initialSort:[
+                {column:"thumbnail", dir:"asc"},
+            ],
             pagination:"local",
             paginationSize:20,
             columns:[
