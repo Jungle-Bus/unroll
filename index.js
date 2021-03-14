@@ -258,10 +258,13 @@ function display_table(lines, line_document_element, display_qa = false){
             maxHeight:"100%",
             layout:"fitColumns",
             groupBy:"mode",
+            initialSort:[
+                {column:"thumbnail", dir:"asc"},
+            ],
             pagination:"local",
             paginationSize:20,
             columns:[
-                {title:"", field:"thumbnail",  formatter:"html"},
+                {title:"", field:"thumbnail",  formatter:"html", sorter:"alphanum"},
                 {title:i18n_messages["Name"], field:"name", headerFilter:"input"},
                 {title:i18n_messages["Operator"], field:"operator", headerFilter:"input"},
                 {title:i18n_messages["Network"], field:"network", headerFilter:"input"},                
