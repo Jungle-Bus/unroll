@@ -374,7 +374,7 @@ async function get_osmose_issues(relation_id){
     var issues = osmose_data['issues'];
     osmose_to_display = [];
     for (const issue of issues){
-        var osmose_map_url = `${osmose_base_url}/map/?item=${issue['item']}&zoom=17&lat=${issue['lat']}&lon=${issue['lon']}`
+        var osmose_map_url = `${osmose_base_url}/map/#item=${issue['item']}&zoom=17&lat=${issue['lat']}&lon=${issue['lon']}&issue_uuid=${issue['id']}`
         osmose_to_display.push({
             "osmose_issue_id": `${osmose_base_url}/error/${issue['id']}`,
             "osmose_text": issue['title']['auto'],
