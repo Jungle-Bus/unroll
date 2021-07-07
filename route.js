@@ -527,18 +527,18 @@ function get_and_display_on_demand_info(relation_id, tags){
 }
 
 function get_and_display_external_info(relation_id, tags){
-    if (tags["ref:FR:STIF:ExternalCode_Line"]){
-        var vianavigo_base_url = "https://www.vianavigo.com/en/timetables/bus";
+    if (tags["ref:FR:STIF"]){
+        var vianavigo_base_url = "https://me-deplacer.iledefrance-mobilites.fr/en/timetables/bus";
         if (current_language == "fr"){
-            vianavigo_base_url = "https://www.vianavigo.com/fiches-horaires/bus"
+            vianavigo_base_url = "https://me-deplacer.iledefrance-mobilites.fr/fiches-horaires/bus"
         }
         var template = `
         <div class="w3-container w3-card w3-white w3-margin-bottom">
           <div class="w3-container">
             <h5 class="w3-opacity"><b>${i18n_messages["External links"]}</b></h5>
             <p>
-                <img src="https://www.vianavigo.com/favicon.ico" alt="vianavigo icon" class="w3-margin-right" style="width:24px">
-                <a href="${vianavigo_base_url}/line:0:${tags["ref:FR:STIF:ExternalCode_Line"]}" target="_blank">${i18n_messages["See the timetable on vianavigo.com"]}</a>
+                <img src="https://me-deplacer.iledefrance-mobilites.fr/favicon.ico" alt="vianavigo icon" class="w3-margin-right" style="width:24px">
+                <a href="${vianavigo_base_url}/line:IDFM:${tags["ref:FR:STIF"]}" target="_blank">${i18n_messages["See the timetable on Île-de-France Mobilités website"]}</a>
             </p>
             <p>
                 <img src="https://data.iledefrance-mobilites.fr/favicon.ico" alt="idfm opendata icon" class="w3-margin-right" style="width:24px">
