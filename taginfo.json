@@ -1,0 +1,138 @@
+{
+	"data_format": 1,
+	"project": {
+		"name": "Unroll",
+		"description": "A public transport route explorer",
+		"project_url": "https://github.com/Jungle-Bus/unroll",
+		"icon_url": "https://github.com/Jungle-Bus/unroll/blob/master/img/Logo_Unroll.png",      
+		"contact_name": "Jungle-Bus",
+		"contact_email": "contact@junglebus.io"
+	},
+	"tags": [
+		{
+			"key": "charge",
+			"object_types": ["relation"],
+			"description": "Trip’s fares",
+		},
+		{
+			"key": "contact:phone",
+			"object_types": ["relation"],
+			"description": "Operator’s phone number (useful if "on demand" route)",
+		},
+		{
+			"key": "contact:website",
+			"object_types": ["relation"],
+			"description": "Operator’s website (useful if "on demand" route)",
+		},
+		{
+			"key": "colour",
+			"object_types": ["relation"],
+			"description": "Colour of the route",
+		},
+		{
+			"key": "duration",
+			"object_types": ["relation"],
+			"description": "Trip’s travel duration",
+		},
+		{
+			"key": "from",
+			"object_types": ["relation"],
+			"description": "Trip’s origin",
+		},
+		{
+			"key": "interval",
+			"object_types": ["relation"],
+			"description": "Trip’s frequency",
+		},
+		{
+			"key": "interval:conditional",
+			"object_types": ["relation"],
+			"description": "Trip’s frequency details",
+		},
+		{
+			"key": "name",
+			"object_types": ["node"],
+			"description": "Stop’s name",
+		},
+		{
+			"key": "name",
+			"object_types": ["relation"],
+			"description": "Route’s name",
+		}
+		{
+			"key": "network",
+			"object_types": ["relation"],
+			"description": "Route’s network name",
+		},
+		{
+			"key": "on_demand",
+			"object_types": ["relation"],
+			"description": "Is the route on demand?",
+		},
+		{
+			"key": "on_demand:description",
+			"object_types": ["relation"],
+			"description": "Description if the route is on demand",
+		},
+		{
+			"key": "opening_hours",
+			"object_types": ["relation"],
+			"description": "Route’s activity hours",
+		},
+		{
+			"key": "operator",
+			"object_types": ["relation"],
+			"description": "Route’s operator name",
+		},
+		{
+			"key": "public_transport",
+			"value": "platform",
+			"description": "Route’s platform",
+		},
+		{
+			"key": "ref",
+			"object_types": ["relation"],
+			"description": "Reference of the route",
+		},
+		{
+			"key": "route_master",
+			"object_types": ["relation"],
+			"description": "Public transport’s type",
+		},
+		{
+			"key": "school",
+			"object_types": ["relation"],
+			"description": "School route",
+		},
+		{
+			"key": "to",
+			"object_types": ["relation"],
+			"description": "Trip’s destination",
+		},
+		{
+			"key": "tourism",
+			"object_types": ["relation"],
+			"description": "Touristic route",
+		},
+		{
+			"key": "type",
+			"object_types": ["relation"],
+			"description": "Possible trips of this route",
+		},
+		{
+			"key": "wheelchair",
+			"object_types": ["relation"],
+			"description": "Route’s wheelchair accessibility",
+		},
+		{
+			"key": "wikidata",
+			"object_types": ["relation"],
+			"description": "Wikipedia content",
+		},
+		{
+			"key": "wikidata",
+			"object_types": ["relation"],
+			"description": "Linked content through Wikidata (Pictures, timetable,…)",
+		}
+	]
+}
