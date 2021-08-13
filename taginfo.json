@@ -27,7 +27,7 @@
 		{
 			"key": "colour",
 			"object_types": ["relation"],
-			"description": "Colour of the route",
+			"description": "Route’s colour",
 		},
 		{
 			"key": "duration",
@@ -132,7 +132,7 @@
 		{
 			"key": "wikidata",
 			"object_types": ["relation"],
-			"description": "Linked content through Wikidata (Pictures, timetable,…)",
+			"description": "Linked content through Wikidata (Pictures, timetable,…)"
 		}
 	]
 }
