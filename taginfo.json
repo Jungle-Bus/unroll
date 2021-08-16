@@ -1,0 +1,155 @@
+{
+	"data_format": 1,
+	"project": {
+		"name": "Unroll",
+		"description": "A public transport route explorer",
+		"project_url": "https://github.com/Jungle-Bus/unroll",
+		"icon_url": "https://github.com/Jungle-Bus/unroll/blob/master/img/Logo_Unroll.png",
+		"contact_name": "Jungle Bus",
+		"contact_email": "contact@junglebus.io"
+	},
+	"tags": [
+		{
+			"key": "charge",
+			"object_types": ["relation"],
+			"description": "Route fares"
+		},
+		{
+			"key": "contact:phone",
+			"object_types": ["relation"],
+			"description": "Phone number (useful if 'on demand' route)"
+		},
+		{
+			"key": "contact:website",
+			"object_types": ["relation"],
+			"description": "Website (useful if 'on demand' route)"
+		},
+		{
+			"key": "colour",
+			"object_types": ["relation"],
+			"description": "Route colour"
+		},
+		{
+			"key": "duration",
+			"object_types": ["relation"],
+			"description": "Trip travel duration"
+		},
+		{
+			"key": "from",
+			"object_types": ["relation"],
+			"description": "Trip origin"
+		},
+		{
+			"key": "hail_and_ride",
+			"object_types": ["relation"],
+			"description": "Does the route have 'hail and ride' sections?"
+		},
+		{
+			"key": "interval",
+			"object_types": ["relation"],
+			"description": "Route frequency"
+		},
+		{
+			"key": "interval:conditional",
+			"object_types": ["relation"],
+			"description": "Route frequency details and exceptions"
+		},
+		{
+			"key": "name",
+			"object_types": ["relation"],
+			"description": "Route name"
+		},
+		{
+			"key": "network",
+			"object_types": ["relation"],
+			"description": "Name of the public transport network "
+		},
+		{
+			"key": "network:wikidata",
+			"object_types": ["relation"],
+			"description": "Used to fetch additional content from Wikimedia project (images, wikipedia extract, etc)"
+		},
+		{
+			"key": "on_demand",
+			"object_types": ["relation"],
+			"description": "Is the route on demand?"
+		},
+		{
+			"key": "on_demand:description",
+			"object_types": ["relation"],
+			"description": "Additional details if the route is on demand"
+		},
+		{
+			"key": "opening_hours",
+			"object_types": ["relation"],
+			"description": "Route’s activity hours"
+		},
+		{
+			"key": "operator",
+			"object_types": ["relation"],
+			"description": "Name of the public transport operator"
+		},
+		{
+			"key": "operator:wikidata",
+			"object_types": ["relation"],
+			"description": "Used to fetch additional content from Wikimedia project (images, wikipedia extract, etc)"
+		},
+		{
+			"key": "ref",
+			"object_types": ["relation"],
+			"description": "Reference of the route"
+		},
+		{
+			"key": "ref:FR:STIF",
+			"object_types": ["relation"],
+			"description": "Reference of the route in IDFM open data sets. Used to link to official route map and timetables."
+		},
+		{
+			"key": "route_master",
+			"object_types": ["relation"],
+			"description": "Public transport mode"
+		},
+		{
+			"key": "school",
+			"object_types": ["relation"],
+			"description": "Is it a school route?"
+		},
+		{
+			"key": "to",
+			"object_types": ["relation"],
+			"description": "Trip destination"
+		},
+		{
+			"key": "tourism",
+			"object_types": ["relation"],
+			"description": "Is it a touristic route?"
+		},
+		{
+			"key": "type",
+			"value": "route",
+			"object_types": ["relation"],
+			"description": "Used to select public transport trips"
+		},
+		{
+			"key": "type",
+			"value": "route_master",
+			"object_types": ["relation"],
+			"description": "Used to select public transport routes"
+		},
+		{
+			"key": "wheelchair",
+			"object_types": ["relation"],
+			"description": "Wheelchair accessibility of the route"
+		},
+		{
+			"key": "wikipedia",
+			"object_types": ["relation"],
+			"description": "Used to fetch Wikipedia extract about the route. Only used if wikidata tag is not set."
+		},
+		{
+			"key": "wikidata",
+			"object_types": ["relation"],
+			"description": "Used to fetch additional content from Wikimedia project (images, wikipedia extract, etc)"
+		}
+	]
+}
