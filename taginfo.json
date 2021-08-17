@@ -4,7 +4,7 @@
 		"name": "Unroll",
 		"description": "A public transport route explorer",
 		"project_url": "https://github.com/Jungle-Bus/unroll",
-		"icon_url": "https://github.com/Jungle-Bus/unroll/blob/master/img/Logo_Unroll.png",
+		"icon_url": "https://raw.githubusercontent.com/Jungle-Bus/unroll/master/img/Logo_Unroll.png",
 		"contact_name": "Jungle Bus",
 		"contact_email": "contact@junglebus.io"
 	},
