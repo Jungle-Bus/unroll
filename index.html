@@ -29,28 +29,28 @@
     </div>
 
     <!-- Tabs -->
-    <div id="Search" class="w3-container w3-white w3-padding-16 myLink">
+    <form id="Search" class="w3-container w3-white w3-padding-16 myLink">
       <h3 data-i18n="Search routes">Search routes</h3>
       <p id="error_network_ref"></p>
       <div class="w3-row-padding" style="margin:0 -16px;">
         <div class="w3-half">
-          <label data-i18n="Line number">Line number</label>
+          <label for="search_ref" data-i18n="Line number">Line number</label>
           <input id="search_ref" class="w3-input w3-border" type="text" placeholder="393">
         </div>
         <div class="w3-half">
-          <label data-i18n="Operator / Network">Operator / Network</label>
+          <label for="search_network" data-i18n="Operator / Network">Operator / Network</label>
           <input id="search_network" class="w3-input w3-border" type="text" placeholder="RATP">
         </div>
       </div>
-      <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(false)" data-i18n="Search">Search</button></p>
-    </div>
+      <p><button type="submit" class="w3-button w3-dark-grey" data-i18n="Search">Search</button></p>
+    </form>
 
-    <div id="Geo" class="w3-container w3-white w3-padding-16 myLink">
+    <form id="Geo" class="w3-container w3-white w3-padding-16 myLink">
       <h3 data-i18n="Search routes by town name">Search routes by town name</h3>
       <p id="error_town"></p>
       <input id="search_town" class="w3-input w3-border" type="text" placeholder="Monaco">
-      <p><button class="w3-button w3-dark-grey" onclick="display_from_overpass(true)" data-i18n="Display routes in town">Display routes in town</button></p>
-    </div>
+      <p><button type="submit" class="w3-button w3-dark-grey" data-i18n="Display routes in town">Display routes in town</button></p>
+    </form>
 
     <div id="Examples" class="w3-container w3-white w3-padding-16 myLink">
       <h3 data-i18n="Check out some examples to get inspired">Check out some examples to get inspired</h3>
@@ -99,6 +99,16 @@ function openLink(evt, linkName) {
 
 // Click on the first tablink on load
 document.getElementsByClassName("tablink")[2].click();
+
+// Add submit listeners
+document.getElementById("Search").onsubmit = (event) => {
+  display_from_overpass(false);
+  event.preventDefault();
+};
+document.getElementById("Geo").onsubmit = (event) => {
+  display_from_overpass(true);
+  event.preventDefault();
+};
 </script>
 <script src="https://unpkg.com/jungle_bus_web_components@1.0.2/src/transport_thumbnail.js"></script>
 <script src="assets/papaparse.min.js"></script>
