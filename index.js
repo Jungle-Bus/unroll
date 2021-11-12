@@ -10,8 +10,8 @@ projects = {
         "qa": true
     },
     "Kochi":{
-        "line_list":"https://raw.githubusercontent.com/Jungle-Bus/KochiTransport_geom_ci/gh-pages/lines.csv",
-        "format": "osm-transit-extractor",
+        "line_list":"https://raw.githubusercontent.com/Jungle-Bus/KochiTransport_exports_ci/gh-pages/lines_for_unroll.csv",
+        "format": "prism",
         "qa": true
     }
 }
@@ -24,6 +24,9 @@ async function on_load(){
         if (projects[project_id]["format"] == "osm-transit-extractor"){
             display_from_osm_transit_extractor_csv_list(projects[project_id]["line_list"], projects[project_id]["qa"])
         }
+        if (projects[project_id]["format"] == "prism"){
+            display_from_prism_csv_list(projects[project_id]["line_list"], projects[project_id]["qa"])
+        }        
     }
 }
 
@@ -175,6 +178,31 @@ function display_from_osm_transit_extractor_csv_list(url, add_qa_to_url){
             results.data.splice(-1, 1);
             for (var line of results.data){
                 line['id'] = line['line_id'].split(':')[2];
+                line["thumbnail"] = `
+            <transport-thumbnail
+                data-transport-mode="${line['mode']}"
+                data-transport-line-code="${line['code'] ||' '}"
+                data-transport-line-color="${line['colour'] || 'grey'}">
+            </transport-thumbnail>`
+            }
+            display_table(results.data, lines_table, add_qa_to_url)
+
+            var lines_stats = document.getElementById("lines_stats");
+            lines_stats.innerHTML = display_stats(results.data);
+            lines_stats.scrollIntoView();
+        }
+    });  
+}
+
+function display_from_prism_csv_list(url, add_qa_to_url){
+    Papa.parse(url, {
+        download: true,
+        header: true,
+        dynamicTyping: true,
+        complete: function(results) {
+            results.data.splice(-1, 1);
+            for (var line of results.data){
+                line['id'] = line['line_id'].slice(1);
                 line["thumbnail"] = `
             <transport-thumbnail
                 data-transport-mode="${line['mode']}"
