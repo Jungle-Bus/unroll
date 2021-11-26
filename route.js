@@ -79,7 +79,7 @@ function display_line_title(tags){
             <transport-thumbnail
                 data-transport-mode="${tags['route_master']}"
                 data-transport-line-code="${tags['ref'] || ' '}"
-                data-transport-line-color="${tags['colour']}">
+                data-transport-line-color="${tags['colour'] || tags['vehicle:colour']}">
             </transport-thumbnail>
             ${tags['name'] || "??" }
         </h2>
@@ -223,7 +223,7 @@ function display_route_title(tags){
         <transport-thumbnail
             data-transport-network="${tags['network'] || '??'}"
             data-transport-mode="${tags['route'] || 'bus'}"
-            data-transport-line-code="${tags['ref'] || '??'}"
+            data-transport-line-code="${tags['ref'] || ' '}"
             data-transport-line-color="${tags['colour'] || "grey"}"
             data-transport-destination="${tags['to'] || '??'}">
         </transport-thumbnail>
@@ -265,7 +265,7 @@ function create_stop_list_for_a_route(stop_list, route_colour) {
 
         inner_html += `
           <span class="stop_dot" style="border-color:${route_colour};"></span>
-          <span><sup>${stop['properties']['name'] || i18n_messages['unamed stop']}</sup></span>
+          <span><sup>${stop['properties'][`name:${current_language}`] || stop['properties']['name'] || i18n_messages['unamed stop']}</sup></span>
 
           `
         inner_html += `
@@ -287,7 +287,11 @@ function init_route_map(tags, stop_list, relation_id){
           <ul>
                 <li>${i18n_messages["Origin:"]} ${tags['from'] || '??'}
                 <li>${i18n_messages["Destination:"]} ${tags['to'] || '??'}
-                <li>${i18n_messages["Travel time:"]} ${tags['duration'] || i18n_messages['unknown']}
+        `
+    if (tags['duration']){
+        template += `<li>${i18n_messages["Travel time:"]} ${tags['duration'] || i18n_messages['unknown']}`;
+        }
+    template +=`
             </ul>
           <p>${stop_list}</p>
           <div id="map_${relation_id}" style="height: 280px;"></div>
