@@ -1,0 +1,7 @@
+header, h6 {
+  display :none;
+}
+
+.remove-on-print {
+  display :none;
+}
