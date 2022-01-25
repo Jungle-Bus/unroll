@@ -4,6 +4,8 @@ var line_id = get_parameter_from_url('line');
 
 var display_osmose_issues = (get_parameter_from_url('qa') == "yes") ? true : false;
 
+var additional_name_language = get_parameter_from_url('name_l10n');
+
 unroll_line(line_id)
 
 async function unroll_line(line_id){
@@ -261,11 +263,16 @@ function create_stop_list_for_a_route(stop_list, route_colour) {
             var border_color = "#FFF";
         }
 
+        var add_name = "";
+        if (additional_name_language){
+            var add_name = stop['properties']['name:'+ additional_name_language] || "";
+        }
+
         inner_html += `<div class="stop_item" style="border-left-color:${border_color};">`;
 
         inner_html += `
           <span class="stop_dot" style="border-color:${route_colour};"></span>
-          <span><sup>${stop['properties'][`name:${current_language}`] || stop['properties']['name'] || i18n_messages['unamed stop']}</sup></span>
+          <span><sup>${stop['properties'][`name:${current_language}`] || stop['properties']['name'] || i18n_messages['unamed stop']} ${add_name}</sup></span>
 
           `
         inner_html += `
