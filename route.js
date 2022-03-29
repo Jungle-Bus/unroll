@@ -104,6 +104,9 @@ function display_line_details(tags, trip_number){
     if (tags['on_demand'] && tags['on_demand'] != "no"){
         additional_detail += `<p><i class="fa fa-fw fa-phone w3-margin-right w3-large w3-text-junglebus"></i>${i18n_messages["On demand:"]} ${tags['on_demand']}</p>`
     }
+    if (tags['bicycle'] && tags['bicycle'] != "no"){
+        additional_detail += `<p><i class="fa fa-fw fa-solid fa-bicycle w3-margin-right w3-large w3-text-junglebus"></i>${i18n_messages["Bicycle:"]} ${tags['bicycle']}</p>`
+    }    
     if (additional_detail){
         additional_detail = "<hr>" + additional_detail + "<hr>"
     }

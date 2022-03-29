@@ -75,6 +75,11 @@
 			"description": "Is the route on demand?"
 		},
 		{
+			"key": "bicycle",
+			"object_types": ["relation"],
+			"description": "Can you take your bicycle on this bus/train route?"
+		},		
+		{
 			"key": "on_demand:description",
 			"object_types": ["relation"],
 			"description": "Additional details if the route is on demand"
