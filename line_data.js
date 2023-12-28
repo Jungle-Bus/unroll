@@ -45,7 +45,9 @@ var line_data = (function() {
                     }
                 }
                 
-                if (line_tags['type'] != 'route_master') {
+                if (line_tags['type'] == 'route') {
+                    return "This is not a public transport line, it is a trip. Try again using its parent relation"
+                } else if (line_tags['type'] != 'route_master') {
                     return "This is not a public transport line"
                 }
     

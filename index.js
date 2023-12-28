@@ -6,7 +6,7 @@ projects = {
     },
     "IDF":{
         "line_list":"https://raw.githubusercontent.com/Jungle-Bus/ref-fr-STIF/gh-pages/data/lignes.csv",
-        "format": "osm-transit-extractor",
+        "format": "prism",
         "qa": true
     },
     "Kochi":{
