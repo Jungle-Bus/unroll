@@ -6,7 +6,7 @@ function get_parameter_from_url(param_name) {
 }
 
 //detect language, get the appropriate translation file, translate html content
-var available_languages = ["cs", "de", "en", "es", "fr", "hu", "it", "pl", "pt"];
+var available_languages = ["ca", "cs", "de", "en", "es", "fr", "hu", "it", "pl", "pt"];
 var current_language = "en"; //also used to get Osmose issue and Wikipedia extract
 var i18n_messages = {}
 async function load_translation_strings(){
