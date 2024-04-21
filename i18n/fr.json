@@ -1,14 +1,14 @@
 {
-    "No route has been found :(": "Aucune ligne n’a été trouvée :-(",
+    "No route has been found :(": "Aucun itinéraire n’a été trouvé :-(",
     "Oops, something went wrong!": "Oups ! Quelque chose s’est mal passé !",
-    "guessing route ..." : "détermination de la ligne ...",
+    "guessing route ..." : "détermination de l’itinéraire...",
     "Home": "Accueil",
-    "Search some route on the home page.": "Rechercher une ligne depuis la page d’accueil.",
+    "Search some route on the home page.": "Rechercher un itinéraire depuis la page d’accueil.",
 
     "No results": "Aucun résultat !",
-    "searching routes ...": "recherche de lignes ...",
+    "searching routes ...": "recherche d’itinéraires...",
     "Please enter a line number and a network": "Veuillez saisir un numéro de ligne et un réseau",
-    "Routes":"Lignes",
+    "Routes":"Itinéraires",
     "Networks": "Réseaux",
     "Operators": "Opérateurs",
     "Modes": "Modes",
@@ -25,8 +25,8 @@
     "Search routes": "Rechercher des lignes",
     "Line number": "Numéro de ligne",
     "Operator / Network": "Opérateur / réseau",
-    "Search routes by town name": "Rechercher des lignes par nom de ville",
-    "Display routes in town": "Afficher les lignes dans la ville",
+    "Search routes by town name": "Rechercher des itinéraires par nom de ville",
+    "Display routes in town": "Afficher les itinéraires dans la ville",
     "Check out some examples to get inspired": "Consultez quelques exemples pour vous inspirer",
     "Display examples": "Afficher des exemples",
 
@@ -55,7 +55,7 @@
     "On demand conditions": "Conditions de transport à la demande",
     "This line has on demand services.": "Cette ligne a des services à la demande.",
     "This line is on demand.": "Cette ligne est à la demande.",
-    "There are some sections on this route with no fixed stops, where you can get on or off the vehicle anywhere along the road by giving a sign to the driver": "Cet itinéraire comprend des section sans arrêts fixes, où vous pouvez monter et descendre du véhicule le long du parcours en faisant signe au chauffeur.",
+    "There are some sections on this route with no fixed stops, where you can get on or off the vehicle anywhere along the road by giving a sign to the driver": "Cet itinéraire comprend des sections sans arrêts fixes, où vous pouvez monter et descendre du véhicule le long du parcours en faisant signe au chauffeur.",
     "External links": "Liens externes",
     "See the timetable on Île-de-France Mobilités website": "Voir la fiche horaire sur le site d'Île-de-France Mobilités",
     "Compare open data and OpenStreetMap": "Comparer les données ouvertes et OpenStreetMap",
@@ -75,6 +75,6 @@
     "unamed stop": "arrêt sans nom",
     "See on OpenStreetMap": "Voir sur OpenStreetMap",
     "This information comes from": "Source des informations :",
-    "the free and collaborative map": "la carte libre et collaborative.",
-    "Join the community to complete or correct the detail of this route!": "Rejoignez la communauté pour compléter ou corriger les détails de cette ligne !"
+    "the free and collaborative map": "la carte libre et collaborative",
+    "Join the community to complete or correct the detail of this route!": "Rejoignez la communauté pour compléter ou corriger les détails de cette ligne !"
 }
