@@ -6,9 +6,9 @@
     "Search some route on the home page.": "Rechercher une ligne depuis la page d’accueil.",
 
     "No results": "Aucun résultat !",
-    "searching routes ...": "recherche d’itinéraires...",
+    "searching routes ...": "recherche de lignes ...",
     "Please enter a line number and a network": "Veuillez saisir un numéro de ligne et un réseau",
-    "Routes":"Itinéraires",
+    "Routes":"Lignes",
     "Networks": "Réseaux",
     "Operators": "Opérateurs",
     "Modes": "Modes",
