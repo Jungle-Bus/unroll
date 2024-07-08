@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Unroll</title>
+    <title>Kerala City Transport Tracker</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -14,12 +14,12 @@
 
   <header class="w3-container w3-junglebus">
     <img src="img/Logo_Unroll.png" alt="Logo" class="w3-left w3-margin-right" style="height:80px">
-    <h1>Unroll</h1>
+    <h1>Kerala City Transport Tracker</h1>
   </header>
 
 <!-- Header -->
 <header class="w3-display-container w3-content" style="max-width:1500px; overflow-x: hidden;">
-  <img class="w3-image" src="img/background.png" alt="background img" title="image - Anthony Levrot, Wikimedia Commons, License CC BY-SA 4.0" style="min-width:800px" width="1500">
+  <img class="w3-image" src="img/background.jpeg" alt="background img" title="image - Binaiks, Wikimedia Commons, License CC BY-SA 3.0" style="min-width:800px" width="1500">
   <div class="w3-display-left w3-padding w3-col l6 m8">
 
     <div class="w3-bar w3-black">
@@ -35,11 +35,11 @@
       <div class="w3-row-padding" style="margin:0 -16px;">
         <div class="w3-half">
           <label for="search_ref" data-i18n="Line number">Line number</label>
-          <input id="search_ref" class="w3-input w3-border" type="text" placeholder="393">
+          <input id="search_ref" class="w3-input w3-border" type="text" placeholder="2A">
         </div>
         <div class="w3-half">
           <label for="search_network" data-i18n="Operator / Network">Operator / Network</label>
-          <input id="search_network" class="w3-input w3-border" type="text" placeholder="RATP">
+          <input id="search_network" class="w3-input w3-border" type="text" placeholder="KSRTC">
         </div>
       </div>
       <p><button type="submit" class="w3-button w3-dark-grey" data-i18n="Search">Search</button></p>
@@ -48,7 +48,7 @@
     <form id="Geo" class="w3-container w3-white w3-padding-16 myLink">
       <h3 data-i18n="Search routes by town name">Search routes by town name</h3>
       <p id="error_town"></p>
-      <input id="search_town" class="w3-input w3-border" type="text" placeholder="Monaco">
+      <input id="search_town" class="w3-input w3-border" type="text" placeholder="Kochi">
       <p><button type="submit" class="w3-button w3-dark-grey" data-i18n="Display routes in town">Display routes in town</button></p>
     </form>
 
@@ -75,9 +75,10 @@
 </div>
 
 <footer class="w3-container w3-junglebus w3-center w3-margin-top w3-tiny">
-  <p>Mobility open data, proudly crafted by the OpenStreetMap community - Open source tool by <a href="https://junglebus.io" target="_blank">Jungle Bus</a></p>
+  <p>Mobility open data, proudly crafted by the OpenStreetMap community - Open source tool by <a href="https://junglebus.io" target="_blank">Jungle Bus</a>. Website forked from <a href="https://github.com/Jungle-Bus/unroll", target="_blank">Unroll</a></p>
+  <p>Project maintained by <a href="https://opendatakerala.org" target="_blank">Open Data Kerala</a>, <a href="https://geominds.in/" target="_blank">Geominds</a> and <a href="https://meta.wikimedia.org/wiki/Sahya_Digital_Conservation_Foundation" target="_blank">Sahya Digital Conservation Foundation</a> </p>
     <div class="w3-xlarge">
-    <a href="https://github.com/Jungle-Bus/unroll" target="_blank"><i class="fa fa-github w3-hover-opacity"></i></a>
+    <a href="https://github.com/opendatakerala/unroll" target="_blank"><i class="fa fa-github w3-hover-opacity"></i></a>
   </div>
 </footer>
 

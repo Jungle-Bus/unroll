@@ -1,0 +1,17 @@
+line_id,colour,from,name,network,operator,public_transport:version,ref,roundtrip,route,to,type
+Line:relation:2846887,,Kovalam,111 East Fort,,,,111,,bus,East Fort,route
+Line:relation:2846888,,East Fort,111 Kovalam,,,,111,,bus,Kovalam,route
+Line:relation:16800706,Magenta,Peroorkada,Peroorkada ↔ Peroorkada,City Circular,KSRTC,2,3 A,yes,bus,Peroorkada,route
+Line:relation:16828984,orange,East Fort,East Fort ↔ East Fort,City Circular,KSRTC,2,9 A,yes,bus,East Fort,route
+Line:relation:17136908,red,Thampanoor,Thampanoor ↔ Thampanoor,city circular,KSRTC,2,1 C,yes,bus,Thampanoor,route
+Line:relation:17271398,red,Thampanoor,Thampanoor ↔ Thampanoor,city circular,KSRTC,2,1 A,yes,bus,Thampanoor,route
+Line:relation:17296060,,,Cherthala → Thiruvananthapuram KSRTC SuperFast,,,,,,bus,,route
+Line:relation:17510300,blue,Thampanoor,Thampanoor ↔ Thampanoor,city circular,KSRTC,2,2C,yes,bus,Thampanoor,route
+Line:relation:17754015,blue,Thampanoor,Thampanoor ↔ Thampanoor,city circular,KSRTC,2,2A,yes,bus,Thampanoor,route
+Line:relation:17770629,brown,Thampanoor,Thampanoor ↔ Attakulangara Road,city circular,KSRTC,2,6C,yes,bus,Attakulangara Road,route
+Line:relation:17772088,brown,Attakulangara Road,Attakulangara Road ↔ Thampanoor,city circular,KSRTC,2,6A,yes,bus,Thampanoor,route
+Line:relation:17782037,green,Transport Bhavan,Transport Bhavan ↔ Thampanoor,city circular,KSRTC,2,7C,yes,bus,Thampanoor,route
+Line:relation:17785173,green,Thampanoor,Thampanoor ↔ Transport Bhavan,city circular,KSRTC,2,7A,yes,bus,Transport Bhavan,route
+Line:relation:17790000,orange,Manacaud,Manacaud ↔ TVM Railway Station,city circular,KSRTC,2,9C,yes,bus,TVM Railway Station,route
+Line:relation:17800939,Yellow,Peroorkada Depot,Peroorkada Depot ↔ Peroorkada Depot,city circular,KSRTC,2,4C,yes,bus,Peroorkada Depot,route
+Line:relation:17802915,Violet,Peroorkada Depot,Peroorkada Depot ↔ Peroorkada Depot,city circular,KSRTC,2,5C,yes,bus,Peroorkada Depot,route

@@ -1,11 +1,6 @@
 projects = {
-    "Abidjan":{
-        "line_list":"https://raw.githubusercontent.com/Jungle-Bus/AbidjanTransport_geom_ci/gh-pages/lines.csv",
-        "format": "osm-transit-extractor",
-        "qa": true
-    },
-    "IDF":{
-        "line_list":"https://raw.githubusercontent.com/Jungle-Bus/ref-fr-STIF/gh-pages/data/lignes.csv",
+    "Thiruvananthapuram":{
+        "line_list":"assets/tvm_Data.csv",
         "format": "osm-transit-extractor",
         "qa": true
     },
@@ -33,53 +28,56 @@ async function on_load(){
 function display_examples(){
     var lines_examples = [
         {
-            "id": 6929043,
-            "ref":"3",
+            "id": 10831516,
+            "ref":"",
             "mode":"bus",
             "colour":"blue",
-            "operator":"",
-            "network":"",
-            "name":"Bus 3 : Gare de Choisy-Le-Roi ↔ Gare de Villeneuve-Saint-Georges"
+            "operator":"Private Owners",
+            "network":"Mofussil Kochi bus",
+            "name":"High Court ↔ Nedungad (via Vypin)",
+            "district": "Ernakulam"
         },
         {
-            "id": 10173635,
-            "ref":"37",
+            "id": 17131270,
+            "ref":"9A",
             "mode":"bus",
-            "colour":"grey",
-            "operator":"",
-            "network":"",
-            "comment": i18n_messages["with fare and schedules"],
-            "name":"bus 37: Gare Sud↔Yopougon Camp Militaire",
+            "colour":"orange",
+            "operator":"KSRTC",
+            "network":"city circular",
+            "name":"East Fort ↔ East Fort",
+            "district": "Thiruvananthapuram"
         },
         {
-            "id": 8404844,
+            "id": 13577501,
             "ref":" ",
             "mode":"bus",
             "colour":"grey",
-            "operator":"",
-            "network":"",
-            "comment": i18n_messages["on-demand bus"],
-            "name":"Bus Filéo Saint-Pathus : Roissypole ↔ Saint-Pathus"
+            "operator":"KSRTC",
+            "network":"Ordinary bus",
+            "name":"High Court ↔ Aluva (via Eloor)",
+            "district": "Ernakulam"
         },
         {
-            "id": 1667801,
-            "ref":"24",
-            "mode":"bus",
-            "colour":"#F78F4B",
-            "operator":"",
-            "network":"",
-            "comment": i18n_messages["night bus"],
-            "name":"Noctilien N24: Gare de Sartrouville ↔ Châtelet "
+            "id": 10831465,
+            "ref":"",
+            "mode":"boat",
+            "colour":"grey",
+            "operator":"KSWTD",
+            "network":"Kochi city boat",
+            "comment": i18n_messages["With Schedule"],
+            "name":"Vypin ↔ Fort Kochi (Ro Ro) ",
+            "district": "Ernakulam"
         },
         {
-            "id": 3328765,
-            "ref":"6",
-            "mode":"subway",
-            "colour":"#75c695",
-            "operator":"",
+            "id": 17508066,
+            "ref":"",
+            "mode":"boat",
+            "colour":"grey",
+            "operator":"Kochi Water Metro Limited",
             "network":"",
-            "comment": i18n_messages["with images and wikipedia"],
-            "name":"Paris Métro line 6",
+            "comment": i18n_messages["with fare"],
+            "name":"Fort Kochi ↔ High Court Water Metro",
+            "district": "Ernakulam"
         },
     ]
     var lines_table = document.getElementById("lines_table");
@@ -319,6 +317,7 @@ function display_table(lines, line_document_element, display_qa = false){
             </td>
             <td><a href="route.html?line=${tags['id']}${display_qa ? "&qa=yes" : ""}">${tags["name"]}</a></td>
             <td>${tags["operator"]}</td>
+            <td>${tags["district"]}</td>
             <td>${tags["network"]}</td>`
             if (tags["comment"]){
                 template+= `<td>${tags["comment"]}</td>`
