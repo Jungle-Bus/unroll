@@ -19,6 +19,7 @@ projects = {
 async function on_load(){
     await load_translation_strings();
     var project_id = get_parameter_from_url('project');
+    var operator_or_network = get_parameter_from_url('operator_or_network');
 
     if (project_id){
         if (projects[project_id]["format"] == "osm-transit-extractor"){
@@ -27,6 +28,9 @@ async function on_load(){
         if (projects[project_id]["format"] == "prism"){
             display_from_prism_csv_list(projects[project_id]["line_list"], projects[project_id]["qa"])
         }        
+    } else if (operator_or_network) {
+        display_from_overpass(false,operator_or_network)
+
     }
 }
 
@@ -89,7 +93,7 @@ function display_examples(){
     lines_table.scrollIntoView();
 }
 
-function display_from_overpass(use_geo){
+function display_from_overpass(use_geo, search_network_or_operator_from_url){
     if (use_geo){
         var town = document.getElementById('search_town').value;
         if (!town){
@@ -110,7 +114,7 @@ function display_from_overpass(use_geo){
         `
 
     } else {
-        var network = document.getElementById('search_network').value;
+        var network = document.getElementById('search_network').value || search_network_or_operator_from_url;
         var ref = document.getElementById('search_ref').value;
         var error_network_ref = document.getElementById("error_network_ref");
         if (!network && !ref){
