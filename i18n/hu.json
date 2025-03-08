@@ -1,7 +1,7 @@
 {
     "No route has been found :(": "Nem található ilyen útvonal :(",
     "Oops, something went wrong!": "Ajjaj, valami nem sikerült!",
-    "guessing route ..." : "útvonal kiszámítása…",
+    "guessing route ..." : "útvonal kitalálása…",
     "Home": "Kezdőlap",
     "Search some route on the home page.": "Keress néhány utat a honlapon.",
 
@@ -43,6 +43,7 @@
     "School:": "Iskola:",
     "Tourism:": "Turizmus:",
     "On demand:": "Igény szerint:",
+    "Bicycle:": "Kerékpár:",    
     "Fares": "Viteldíjak",
     "Edit Fares": "Viteldíjak szerkesztése",
     "Schedules": "Menetrendek",
