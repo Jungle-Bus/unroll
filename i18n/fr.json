@@ -4,6 +4,7 @@
     "guessing route ..." : "détermination de la ligne ...",
     "Home": "Accueil",
     "Search some route on the home page.": "Rechercher une ligne depuis la page d’accueil.",
+    "You must provide a ref:FR:STIF reference to use this feature, or search for a route on the home page.": "Veuillez fournir un identifiant ref:FR:STIF, ou rechercher une ligne depuis la page d'accueil.",
 
     "No results": "Aucun résultat !",
     "searching routes ...": "recherche de lignes ...",
