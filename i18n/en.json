@@ -4,6 +4,7 @@
     "guessing route ..." : "guessing route ...",
     "Home": "Home",
     "Search some route on the home page.": "Search some route on the home page.",
+    "You must provide a ref:FR:STIF reference to use this feature, or search for a route on the home page.": "You must provide a ref:FR:STIF reference to use this feature, or search for a route on the home page.",
 
     "No results": "No results",
     "searching routes ...": "searching routes ...",

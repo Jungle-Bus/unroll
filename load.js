@@ -1,5 +1,6 @@
 var network = get_parameter_from_url('network');
 var ref = get_parameter_from_url('ref');
+var ref_stif = get_parameter_from_url('ref:FR:STIF');
 
 var qa = get_parameter_from_url('qa');
 
@@ -38,7 +39,23 @@ async function main(){
             document.getElementById("message").innerHTML = display_error(status);
         });
     
-    } else {
+    } 
+    else if (ref_stif) {
+        function isNumeric(str) {
+            return /^\d+$/.test(str);
+        }
+
+        if (ref_stif.startsWith('C')) {
+            window.location.href = `https://me-deplacer.iledefrance-mobilites.fr/fiches-horaires/bus/line:IDFM:${ref_stif}`;
+        } else if (isNumeric(ref_stif)) {
+            window.location.href = `https://data.iledefrance-mobilites.fr/explore/dataset/arrets/table/?q=${ref_stif}`;
+        } 
+        else {
+            message = i18n_messages["You must provide a ref:FR:STIF reference to use this feature, or search for a route on the home page."];
+            document.getElementById("message").innerHTML = display_error(message);
+        }
+    }
+    else {
         status = i18n_messages["Search some route on the home page."]
         document.getElementById("message").innerHTML = display_error(status);
     }
