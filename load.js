@@ -30,13 +30,13 @@ async function main(){
                 
             } else {
                 status = i18n_messages["No route has been found :("];
-                document.getElementById("message").innerHTML = display_error(status);
+                document.getElementById("message").innerHTML = mutualised_display_error(status);
             }
         })
         .catch(function(error) {
             console.error(error.message);
             status = i18n_messages["Oops, something went wrong!"]
-            document.getElementById("message").innerHTML = display_error(status);
+            document.getElementById("message").innerHTML = mutualised_display_error(status);
         });
     
     } 
@@ -57,16 +57,8 @@ async function main(){
     }
     else {
         status = i18n_messages["Search some route on the home page."]
-        document.getElementById("message").innerHTML = display_error(status);
+        document.getElementById("message").innerHTML = mutualised_display_error(status);
     }
        
 }
 
-function display_error(error_message){
-    var template = `
-    <div class="w3-panel w3-pale-red w3-leftbar w3-border-red">
-        ${error_message}
-    </div>
-    `
-    return template
-}
