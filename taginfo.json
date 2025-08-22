@@ -10,6 +10,12 @@
 	},
 	"tags": [
 		{
+			"key": "amenity",
+			"value": "bus_station",
+			"object_types": ["way", "relation"],
+			"description": "Used to select bus stations"
+		},
+		{
 			"key": "charge",
 			"object_types": ["relation"],
 			"description": "Route fares"
@@ -45,6 +51,11 @@
 			"description": "Does the route have 'hail and ride' sections?"
 		},
 		{
+			"key": "internet_access",
+			"object_types": ["way","relation"],
+			"description": "Does the bus station have internet access?"
+		},
+		{
 			"key": "interval",
 			"object_types": ["relation"],
 			"description": "Route frequency"
@@ -57,7 +68,7 @@
 		{
 			"key": "name",
 			"object_types": ["relation"],
-			"description": "Route name"
+			"description": "Route name / Bus station name"
 		},
 		{
 			"key": "network",
@@ -125,6 +136,11 @@
 			"description": "Trip destination"
 		},
 		{
+			"key": "toilets",
+			"object_types": ["way","relation"],
+			"description": "Does the bus station have toilets?"
+		},
+		{
 			"key": "tourism",
 			"object_types": ["relation"],
 			"description": "Is it a touristic route?"
@@ -144,12 +160,12 @@
 		{
 			"key": "wheelchair",
 			"object_types": ["relation"],
-			"description": "Wheelchair accessibility of the route"
+			"description": "Wheelchair accessibility of the route / bus station"
 		},
 		{
 			"key": "wikipedia",
 			"object_types": ["relation"],
-			"description": "Used to fetch Wikipedia extract about the route. Only used if wikidata tag is not set."
+			"description": "Used to fetch Wikipedia extract about the route / bus station. Only used if wikidata tag is not set."
 		},
 		{
 			"key": "wikidata",

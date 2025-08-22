@@ -16,6 +16,8 @@ Want to inspect routes in your own language ? [Translations happen here](https:/
 
 * You can add `?qa=yes` to the route page url to display [Osmose issues](https://github.com/Jungle-Bus/transport_mapcss) (if any) about the route.
 * On OSM wiki, you can display a link to the Unroll page of a route with the [Unroll template](https://wiki.openstreetmap.org/wiki/Template:Unroll) : `{{Unroll|rel=3328765|label=Metro 6}}`
+* Use [Unroll load page](https://jungle-bus.github.io/unroll/load.html?ref:FR:STIF=C01298) to check `ref:FR:STIF` tag (Paris region open data codes)
+* Use [Unroll bus_station page](https://jungle-bus.github.io/unroll/bus_station.html?bus_station_id=w148818296) for viewing bus station info
 
 ## Credits
 
