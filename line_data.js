@@ -77,7 +77,7 @@ var line_data = (function() {
                         .map(member => stop_position_list_as_geojson.push(geojson_elems[member['type'] + '/' + member['ref']]));
                     
                     var mode = route['tags']['route'];
-                    if (["subway", "tram", "train", "railway"].includes(mode)){
+                    if (["subway", "tram", "train", "railway", "aerialway"].includes(mode)){
                         var stop_list_as_geojson = stop_position_list_as_geojson
                     } else {
                         var stop_list_as_geojson = platform_list_as_geojson
